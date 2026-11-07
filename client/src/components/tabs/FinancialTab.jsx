@@ -110,7 +110,7 @@ export default function FinancialTab({
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
-              <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase tracking-wider text-[11px]">
+              <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase tracking-wider text-xs">
                 <th className="py-3 px-4">Cycle</th>
                 <th className="py-3 px-4">Plot & Farm</th>
                 <th className="py-3 px-4">Crop Variety</th>
@@ -128,11 +128,11 @@ export default function FinancialTab({
                   <td className="py-3 px-4 font-mono font-bold text-slate-900">#{c.cycle_id}</td>
                   <td className="py-3 px-4">
                     <span className="font-semibold text-slate-900 block">{c.plot_name}</span>
-                    <span className="text-slate-400 text-[11px] font-mono">{c.plot_code} ({c.area_acres} ac)</span>
+                    <span className="text-slate-400 text-xs font-mono">{c.plot_code} ({c.area_acres} ac)</span>
                   </td>
                   <td className="py-3 px-4">
                     <span className="font-bold text-slate-900">{c.crop_name}</span>
-                    <span className="block text-slate-400 text-[11px]">{c.variety_name}</span>
+                    <span className="block text-slate-400 text-xs">{c.variety_name}</span>
                   </td>
                   <td className="py-3 px-4 font-medium">{c.season}</td>
                   <td className="py-3 px-4 text-right font-medium text-amber-700">
@@ -145,7 +145,7 @@ export default function FinancialTab({
                     ₹{(c.profit || 0).toLocaleString()}
                   </td>
                   <td className="py-3 px-4 text-right font-semibold">
-                    <span className={`inline-block px-2 py-0.5 rounded-full text-[10px] ${
+                    <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-medium ${
                       c.roi >= 100 
                         ? 'bg-emerald-100 text-emerald-800' 
                         : c.roi > 0 

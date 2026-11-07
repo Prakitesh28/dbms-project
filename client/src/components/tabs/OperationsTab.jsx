@@ -25,15 +25,15 @@ export default function OperationsTab({
   const getStatusBadge = (status) => {
     switch (status) {
       case 'Growing':
-        return <span className="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-100 text-emerald-800">Growing</span>;
+        return <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800">Growing</span>;
       case 'Sown':
-        return <span className="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-blue-100 text-blue-800">Sown</span>;
+        return <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">Sown</span>;
       case 'Planned':
-        return <span className="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-amber-100 text-amber-800">Planned</span>;
+        return <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800">Planned</span>;
       case 'Harvested':
-        return <span className="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-purple-100 text-purple-800">Harvested</span>;
+        return <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">Harvested</span>;
       default:
-        return <span className="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-slate-100 text-slate-700">{status}</span>;
+        return <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-700">{status}</span>;
     }
   };
 
@@ -110,7 +110,7 @@ export default function OperationsTab({
                     </div>
                     <h3 className="text-base font-bold text-slate-900 tracking-tight">{plot.name}</h3>
                   </div>
-                  <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                  <span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${
                     plot.status === 'Active' ? 'bg-emerald-50 text-emerald-700' : 'bg-slate-100 text-slate-600'
                   }`}>
                     {plot.status}
@@ -119,22 +119,22 @@ export default function OperationsTab({
 
                 <div className="grid grid-cols-3 gap-2 py-3 border-y border-slate-100 text-center mb-4">
                   <div className="p-2 rounded-lg bg-slate-50">
-                    <span className="text-[10px] font-semibold text-slate-400 block uppercase">Area</span>
+                    <span className="text-xs font-medium text-slate-400 block">Area</span>
                     <span className="text-xs font-bold text-slate-800">{plot.area_acres} Acres</span>
                   </div>
                   <div className="p-2 rounded-lg bg-slate-50">
-                    <span className="text-[10px] font-semibold text-slate-400 block uppercase">Soil</span>
+                    <span className="text-xs font-medium text-slate-400 block">Soil</span>
                     <span className="text-xs font-bold text-slate-800 truncate block">{plot.soil_type}</span>
                   </div>
                   <div className="p-2 rounded-lg bg-slate-50">
-                    <span className="text-[10px] font-semibold text-slate-400 block uppercase">Irrigation</span>
+                    <span className="text-xs font-medium text-slate-400 block">Irrigation</span>
                     <span className="text-xs font-bold text-slate-800 truncate block">{plot.irrigation_type}</span>
                   </div>
                 </div>
 
                 {/* Active cultivation state */}
                 <div className="p-3 rounded-lg bg-slate-50/80 border border-slate-100 mb-4">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
+                  <span className="text-xs font-medium text-slate-500 block mb-1">
                     Current Cropping Status
                   </span>
                   {plot.active_crop ? (
@@ -145,7 +145,7 @@ export default function OperationsTab({
                           <div className="text-xs font-bold text-slate-900">
                             {plot.active_crop} - {plot.active_variety}
                           </div>
-                          <div className="text-[10px] text-slate-500">
+                          <div className="text-xs text-slate-500">
                             Sown: {plot.sowing_date} &bull; Expected Harvest: {plot.expected_harvest_date}
                           </div>
                         </div>
@@ -184,7 +184,7 @@ export default function OperationsTab({
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse text-xs">
               <thead>
-                <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase tracking-wider text-[11px]">
+                <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase tracking-wider text-xs">
                   <th className="py-3 px-4">Cycle ID</th>
                   <th className="py-3 px-4">Plot</th>
                   <th className="py-3 px-4">Crop & Variety</th>
@@ -202,7 +202,7 @@ export default function OperationsTab({
                     <td className="py-3 px-4 font-medium text-slate-900">{e.plot_name} ({e.plot_code})</td>
                     <td className="py-3 px-4">
                       <span className="font-bold text-slate-900">{e.crop_name}</span>
-                      <span className="block text-slate-400 text-[11px]">{e.variety_name}</span>
+                      <span className="block text-slate-400 text-xs">{e.variety_name}</span>
                     </td>
                     <td className="py-3 px-4 font-medium">{e.season}</td>
                     <td className="py-3 px-4">{e.sowing_date}</td>
@@ -261,7 +261,7 @@ export default function OperationsTab({
                   <div className="flex items-center gap-2 p-2 rounded-lg bg-emerald-50 border border-emerald-100 text-emerald-900">
                     <CalendarIcon className="w-4 h-4 text-emerald-600 shrink-0" />
                     <div>
-                      <span className="text-[10px] uppercase font-bold text-emerald-600 block">Sown</span>
+                      <span className="text-xs uppercase font-medium text-emerald-600 block">Sown</span>
                       <span className="font-semibold">{e.sowing_date}</span>
                     </div>
                   </div>
@@ -271,7 +271,7 @@ export default function OperationsTab({
                   <div className="flex items-center gap-2 p-2 rounded-lg bg-purple-50 border border-purple-100 text-purple-900">
                     <CheckCircle2 className="w-4 h-4 text-purple-600 shrink-0" />
                     <div>
-                      <span className="text-[10px] uppercase font-bold text-purple-600 block">Harvest</span>
+                      <span className="text-xs uppercase font-medium text-purple-600 block">Harvest</span>
                       <span className="font-semibold">{e.actual_harvest_date || e.expected_harvest_date}</span>
                     </div>
                   </div>

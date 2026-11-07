@@ -119,21 +119,21 @@ export default function PlotsPage({ farmId, onOpenNewPlot, onSelectPlotHistory }
 
                 <div className="grid grid-cols-3 gap-2 py-3 border-y border-slate-100 text-center mb-4">
                   <div className="p-2 rounded-lg bg-slate-50">
-                    <span className="text-[10px] font-semibold text-slate-400 block uppercase">Area</span>
+                    <span className="text-xs font-medium text-slate-400 block">Area</span>
                     <span className="text-xs font-bold text-slate-800">{plot.area_acres} Acres</span>
                   </div>
                   <div className="p-2 rounded-lg bg-slate-50">
-                    <span className="text-[10px] font-semibold text-slate-400 block uppercase">Soil</span>
+                    <span className="text-xs font-medium text-slate-400 block">Soil</span>
                     <span className="text-xs font-bold text-slate-800 truncate block">{plot.soil_type}</span>
                   </div>
                   <div className="p-2 rounded-lg bg-slate-50">
-                    <span className="text-[10px] font-semibold text-slate-400 block uppercase">Water</span>
+                    <span className="text-xs font-medium text-slate-400 block">Water</span>
                     <span className="text-xs font-bold text-slate-800 truncate block">{plot.irrigation_type}</span>
                   </div>
                 </div>
 
                 <div className="p-3 rounded-lg bg-slate-50/70 border border-slate-100 mb-4">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
+                  <span className="text-xs font-medium text-slate-500 block mb-1">
                     Current Rotation Status
                   </span>
                   {plot.current_crop_name ? (
@@ -143,7 +143,7 @@ export default function PlotsPage({ farmId, onOpenNewPlot, onSelectPlotHistory }
                         <div className="text-xs font-bold text-slate-900">
                           {plot.current_crop_name} ({plot.current_variety_name})
                         </div>
-                        <div className="text-[10px] text-slate-500">
+                        <div className="text-xs text-slate-500">
                           Status: <span className="font-semibold text-emerald-700">{plot.current_cycle_status}</span>
                         </div>
                       </div>

@@ -64,28 +64,28 @@ export default function InventoryTransactionsPage({ onOpenLogUsage, onOpenNewTra
     switch (type) {
       case 'purchase':
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">
-            <ArrowDownLeft className="w-3 h-3 text-emerald-600" />
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+            <ArrowDownLeft className="w-3.5 h-3.5 text-emerald-600" />
             Purchase (+)
           </span>
         );
       case 'usage':
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800">
-            <ArrowUpRight className="w-3 h-3 text-amber-600" />
-            Field Usage (-)
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200">
+            <ArrowUpRight className="w-3.5 h-3.5 text-amber-600" />
+            Usage (-)
           </span>
         );
       case 'wastage':
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 text-rose-800">
-            <AlertTriangle className="w-3 h-3 text-rose-600" />
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-rose-50 text-rose-700 border border-rose-200">
+            <AlertTriangle className="w-3.5 h-3.5 text-rose-600" />
             Wastage (-)
           </span>
         );
       default:
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-800">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-700 border border-slate-200">
             Adjustment
           </span>
         );
@@ -140,14 +140,14 @@ export default function InventoryTransactionsPage({ onOpenLogUsage, onOpenNewTra
           {/* Date range filter */}
           <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1">
             <Calendar className="w-3.5 h-3.5 text-slate-400" />
-            <span className="text-[11px] font-semibold text-slate-500 uppercase">From</span>
+            <span className="text-xs font-semibold text-slate-500 uppercase">From</span>
             <input
               type="date"
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
               className="bg-transparent text-xs text-slate-800 focus:outline-hidden"
             />
-            <span className="text-[11px] font-semibold text-slate-400 uppercase">To</span>
+            <span className="text-xs font-semibold text-slate-400 uppercase">To</span>
             <input
               type="date"
               value={endDate}
@@ -201,7 +201,7 @@ export default function InventoryTransactionsPage({ onOpenLogUsage, onOpenNewTra
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse text-xs">
               <thead>
-                <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase tracking-wider text-[11px]">
+                <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase tracking-wider text-xs">
                   <th className="py-3 px-4">Tx ID</th>
                   <th className="py-3 px-4">Date</th>
                   <th className="py-3 px-4">Type</th>
@@ -221,7 +221,7 @@ export default function InventoryTransactionsPage({ onOpenLogUsage, onOpenNewTra
                     <td className="py-3 px-4">{getTypeBadge(t.transaction_type)}</td>
                     <td className="py-3 px-4">
                       <span className="font-bold text-slate-900 block">{t.item_name}</span>
-                      <span className="text-[11px] text-slate-400 font-mono">Cat: {t.item_category}</span>
+                      <span className="text-xs text-slate-400 font-mono">Cat: {t.item_category}</span>
                     </td>
                     <td className="py-3 px-4 text-right font-mono font-bold text-slate-900">
                       {t.quantity} <span className="font-normal text-slate-500">{t.unit}</span>
@@ -238,7 +238,7 @@ export default function InventoryTransactionsPage({ onOpenLogUsage, onOpenNewTra
                           <span className="font-semibold text-slate-800">
                             {t.crop_name} ({t.plot_code})
                           </span>
-                          <span className="block text-[10px] text-slate-400">
+                          <span className="block text-xs text-slate-400">
                             Cycle #{t.crop_cycle_id} &bull; {t.cycle_season}
                           </span>
                         </div>

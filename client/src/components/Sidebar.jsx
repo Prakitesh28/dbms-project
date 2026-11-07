@@ -58,14 +58,14 @@ export default function Sidebar({
             </div>
             <div>
               <span className="font-semibold text-slate-900 tracking-tight text-lg">FarmLedger</span>
-              <span className="text-[10px] block text-emerald-600 font-medium tracking-wide uppercase">DBMS Edition</span>
+              <span className="text-xs block text-emerald-600 font-medium">Agricultural DBMS</span>
             </div>
           </div>
         </div>
 
         {/* Farm Switcher */}
         <div className="p-4 border-b border-slate-100 bg-slate-50/50">
-          <label className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block mb-1.5 px-1">
+          <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5 px-1">
             Current Farm
           </label>
           <div className="relative">
@@ -209,8 +209,8 @@ export default function Sidebar({
           </div>
 
           <div className="pt-3 pb-1">
-            <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-3">
-              Analytics & DBMS
+            <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider px-3">
+              Analytics & Reports
             </span>
           </div>
 
@@ -241,29 +241,29 @@ export default function Sidebar({
           </button>
         </nav>
 
-        {/* Weather Forecast & DBMS Integrity Status in Footer */}
+        {/* Weather Forecast & System Integrity Status in Footer */}
         <div className="p-3 border-t border-slate-100 space-y-2 bg-slate-50/70">
           <button
             onClick={onOpenWeatherModal}
-            className="w-full flex items-center justify-between p-2 rounded-lg bg-white border border-slate-200 shadow-2xs hover:border-emerald-300 transition-colors text-left"
+            className="w-full flex items-center justify-between p-2.5 rounded-lg bg-white border border-slate-200 shadow-2xs hover:border-emerald-300 transition-colors text-left"
           >
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2.5">
               <CloudSun className="w-4 h-4 text-amber-500 shrink-0" />
               <div>
                 <div className="text-xs font-semibold text-slate-800">Open-Meteo Weather</div>
-                <div className="text-[11px] text-slate-500">7-Day Agri Forecast</div>
+                <div className="text-xs text-slate-500">7-Day Agri Forecast</div>
               </div>
             </div>
             {weatherAlertCount > 0 && (
-              <span className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-rose-100 text-rose-700 animate-pulse">
-                {weatherAlertCount} Alert{weatherAlertCount > 1 ? 's' : ''}
+              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-rose-100 text-rose-700">
+                {weatherAlertCount} {weatherAlertCount > 1 ? 'Alerts' : 'Alert'}
               </span>
             )}
           </button>
 
-          <div className="px-2 py-1 flex items-center gap-1.5 text-[11px] text-slate-400">
+          <div className="px-2 py-1 flex items-center gap-1.5 text-xs text-slate-500">
             <Database className="w-3.5 h-3.5 text-emerald-600" />
-            <span>3NF SQLite Ledger &bull; Triggers Active</span>
+            <span>SQLite &bull; Triggers Enforced</span>
           </div>
         </div>
       </aside>

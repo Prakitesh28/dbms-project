@@ -136,7 +136,7 @@ export default function CropCyclesPage({
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse text-xs">
               <thead>
-                <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase tracking-wider text-[11px]">
+                <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase tracking-wider text-xs">
                   <th className="py-3 px-4">Cycle ID</th>
                   <th className="py-3 px-4">Plot & Farm</th>
                   <th className="py-3 px-4">Crop Cultivar</th>
@@ -160,18 +160,18 @@ export default function CropCyclesPage({
                       <td className="py-3 px-4 font-mono font-bold text-slate-900">#{c.id}</td>
                       <td className="py-3 px-4">
                         <span className="font-bold text-slate-900 block">{c.plot_name}</span>
-                        <span className="text-[11px] text-slate-400 font-mono">
+                        <span className="text-xs text-slate-400 font-mono">
                           {c.plot_code} &bull; {c.area_acres} ac &bull; {c.soil_type}
                         </span>
                       </td>
                       <td className="py-3 px-4">
                         <span className="font-bold text-slate-900">{c.crop_name}</span>
-                        <span className="block text-[11px] text-slate-500">{c.variety_name}</span>
+                        <span className="block text-xs text-slate-500">{c.variety_name}</span>
                       </td>
                       <td className="py-3 px-4 font-medium text-slate-800">{c.season}</td>
                       <td className="py-3 px-4">
                         <div>Sown: <span className="font-semibold text-slate-800">{c.sowing_date}</span></div>
-                        <div className="text-slate-400 text-[11px]">
+                        <div className="text-slate-400 text-xs">
                           Target: {c.actual_harvest_date || c.expected_harvest_date}
                         </div>
                       </td>
@@ -189,33 +189,33 @@ export default function CropCyclesPage({
                         {isHarvested ? (
                           <div className="inline-flex items-center gap-1 font-bold">
                             {variancePct >= 0 ? (
-                              <span className="px-2 py-0.5 rounded-full text-[10px] bg-emerald-100 text-emerald-800 flex items-center gap-0.5">
+                              <span className="px-2.5 py-0.5 rounded-full text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1">
                                 <TrendingUp className="w-3 h-3" />
                                 +{variancePct}%
                               </span>
                             ) : isDeficit ? (
-                              <span className="px-2 py-0.5 rounded-full text-[10px] bg-rose-100 text-rose-800 flex items-center gap-0.5 animate-pulse" title="Fell >15% below estimate!">
+                              <span className="px-2.5 py-0.5 rounded-full text-xs bg-rose-50 text-rose-700 border border-rose-200 flex items-center gap-1" title="Fell >15% below estimate!">
                                 <AlertTriangle className="w-3 h-3 text-rose-600" />
                                 {variancePct}%
                               </span>
                             ) : (
-                              <span className="px-2 py-0.5 rounded-full text-[10px] bg-amber-100 text-amber-800 flex items-center gap-0.5">
+                              <span className="px-2.5 py-0.5 rounded-full text-xs bg-amber-50 text-amber-700 border border-amber-200 flex items-center gap-1">
                                 <TrendingDown className="w-3 h-3" />
                                 {variancePct}%
                               </span>
                             )}
                           </div>
                         ) : (
-                          <span className="text-slate-400 text-[11px]">&mdash;</span>
+                          <span className="text-slate-400 text-xs">&mdash;</span>
                         )}
                       </td>
                       <td className="py-3 px-4">
-                        <span className={`inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
-                          c.status === 'Growing' ? 'bg-emerald-100 text-emerald-800' :
-                          c.status === 'Sown' ? 'bg-blue-100 text-blue-800' :
-                          c.status === 'Planned' ? 'bg-amber-100 text-amber-800' :
-                          c.status === 'Harvested' ? 'bg-purple-100 text-purple-800' :
-                          'bg-slate-100 text-slate-600'
+                        <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                          c.status === 'Growing' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' :
+                          c.status === 'Sown' ? 'bg-blue-50 text-blue-700 border border-blue-200' :
+                          c.status === 'Planned' ? 'bg-amber-50 text-amber-700 border border-amber-200' :
+                          c.status === 'Harvested' ? 'bg-purple-50 text-purple-700 border border-purple-200' :
+                          'bg-slate-100 text-slate-600 border border-slate-200'
                         }`}>
                           {c.status}
                         </span>

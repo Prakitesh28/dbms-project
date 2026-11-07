@@ -134,7 +134,7 @@ export default function ReportsPage() {
             {activeReport === 'cost_per_acre' && (
               <table className="w-full text-left border-collapse text-xs">
                 <thead>
-                  <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase tracking-wider text-[11px]">
+                  <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase tracking-wider text-xs">
                     <th className="py-3 px-4">Cycle</th>
                     <th className="py-3 px-4">Plot Name</th>
                     <th className="py-3 px-4">Crop Variety</th>
@@ -156,7 +156,7 @@ export default function ReportsPage() {
                       <td className="py-3 px-4 text-right font-medium text-amber-700">₹{r.total_input_cost.toLocaleString()}</td>
                       <td className="py-3 px-4 text-right font-bold text-slate-900">₹{r.input_cost_per_acre.toLocaleString()} / ac</td>
                       <td className="py-3 px-4">
-                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-700 uppercase">
+                        <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-700">
                           {r.status}
                         </span>
                       </td>
@@ -170,7 +170,7 @@ export default function ReportsPage() {
             {activeReport === 'yield_per_acre' && (
               <table className="w-full text-left border-collapse text-xs">
                 <thead>
-                  <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase tracking-wider text-[11px]">
+                  <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase tracking-wider text-xs">
                     <th className="py-3 px-4">Cycle</th>
                     <th className="py-3 px-4">Plot</th>
                     <th className="py-3 px-4">Crop</th>
@@ -197,17 +197,17 @@ export default function ReportsPage() {
                         <td className="py-3 px-4 text-right text-slate-600">{r.estimated_yield_per_acre}</td>
                         <td className="py-3 px-4 text-right font-bold text-slate-900">{r.actual_yield_per_acre}</td>
                         <td className="py-3 px-4 text-right font-bold">
-                          <span className={`px-2 py-0.5 rounded-full text-[10px] ${
+                          <span className={`px-2.5 py-0.5 rounded-full text-xs ${
                             r.variance_pct >= 0 ? 'bg-emerald-100 text-emerald-800' :
-                            isDeficit ? 'bg-rose-100 text-rose-800 animate-pulse' : 'bg-amber-100 text-amber-800'
+                            isDeficit ? 'bg-rose-100 text-rose-800' : 'bg-amber-100 text-amber-800'
                           }`}>
                             {r.variance_pct > 0 ? `+${r.variance_pct}` : r.variance_pct}%
                           </span>
                         </td>
                         <td className="py-3 px-4">
-                          <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                          <span className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${
                             isDeficit ? 'bg-rose-50 text-rose-700 border border-rose-200' :
-                            r.variance_pct >= 0 ? 'bg-emerald-50 text-emerald-700' : 'bg-slate-100 text-slate-600'
+                            r.variance_pct >= 0 ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-slate-100 text-slate-600'
                           }`}>
                             {r.yield_assessment}
                           </span>
@@ -223,7 +223,7 @@ export default function ReportsPage() {
             {activeReport === 'profit_by_crop' && (
               <table className="w-full text-left border-collapse text-xs">
                 <thead>
-                  <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase tracking-wider text-[11px]">
+                  <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase tracking-wider text-xs">
                     <th className="py-3 px-4">Crop Name</th>
                     <th className="py-3 px-4">Category</th>
                     <th className="py-3 px-4 text-right">Cycles Sown</th>
@@ -247,7 +247,7 @@ export default function ReportsPage() {
                         ₹{r.net_profit.toLocaleString()}
                       </td>
                       <td className="py-3 px-4 text-right font-bold">
-                        <span className="px-2.5 py-0.5 rounded-full text-[11px] bg-emerald-100 text-emerald-800">
+                        <span className="px-2.5 py-0.5 rounded-full text-xs bg-emerald-100 text-emerald-800">
                           {r.roi_percentage}%
                         </span>
                       </td>
@@ -261,7 +261,7 @@ export default function ReportsPage() {
             {activeReport === 'seasonal' && (
               <table className="w-full text-left border-collapse text-xs">
                 <thead>
-                  <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase tracking-wider text-[11px]">
+                  <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase tracking-wider text-xs">
                     <th className="py-3 px-4">Season</th>
                     <th className="py-3 px-4 text-right">Total Cycles</th>
                     <th className="py-3 px-4 text-right">Total Acres Sown</th>
