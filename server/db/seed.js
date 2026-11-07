@@ -8,17 +8,40 @@ const __dirname = path.dirname(__filename);
 const dbPath = path.join(__dirname, 'farmledger.db');
 
 export async function resetAndSeedDatabase() {
-  // If db file exists, remove to get a pristine fresh state
+  let dbRemoved = false;
   if (fs.existsSync(dbPath)) {
     try {
       fs.unlinkSync(dbPath);
-      console.log('[DB] Removed old farmledger.db');
+      dbRemoved = true;
+      console.log('[DB] Removed old farmledger.db file.');
     } catch (e) {
-      console.warn('[DB] Could not delete old file, continuing with wipe...');
+      console.warn('[DB] farmledger.db is currently locked by a process; wiping tables directly...');
     }
   }
 
   const db = await getDb();
+  
+  if (!dbRemoved) {
+    // Drop all existing tables & triggers cleanly
+    db.exec('PRAGMA foreign_keys = OFF;');
+    const tables = [
+      'sales_records',
+      'harvest_records',
+      'inventory_transactions',
+      'inventory_items',
+      'suppliers',
+      'crop_cycles',
+      'crop_varieties',
+      'crops',
+      'plots',
+      'farms'
+    ];
+    for (const t of tables) {
+      db.exec(`DROP TABLE IF EXISTS ${t};`);
+    }
+    db.exec('PRAGMA foreign_keys = ON;');
+    console.log('[DB] Cleaned existing tables.');
+  }
   
   const schemaPath = path.join(__dirname, 'schema.sql');
   const schemaSql = fs.readFileSync(schemaPath, 'utf8');

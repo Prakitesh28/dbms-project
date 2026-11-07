@@ -295,10 +295,17 @@ END;
 
 -- ==============================================================================
 -- SQL VIEWS: ANALYTICAL & OPERATIONAL ABSTRACTIONS
+-- Dropping existing views first ensures updates apply cleanly to existing DBs
 -- ==============================================================================
 
+DROP VIEW IF EXISTS v_low_stock_items;
+DROP VIEW IF EXISTS v_out_of_stock_items;
+DROP VIEW IF EXISTS v_monthly_inventory_value;
+DROP VIEW IF EXISTS v_estimated_vs_actual_yield;
+DROP VIEW IF EXISTS v_current_stock_levels;
+
 -- View 1: Current Stock Levels with computed valuations and health status
-CREATE VIEW IF NOT EXISTS v_current_stock_levels AS
+CREATE VIEW v_current_stock_levels AS
 SELECT
     i.id AS item_id,
     i.farm_id,
@@ -322,8 +329,8 @@ FROM inventory_items i
 JOIN farms f ON i.farm_id = f.id
 LEFT JOIN suppliers s ON i.supplier_id = s.id;
 
--- View 2: Low Stock Items (Threshold: current_stock <= 10 or current_stock <= reorder_level)
-CREATE VIEW IF NOT EXISTS v_low_stock_items AS
+-- View 2: Low Stock Items (Threshold: strictly current_stock <= reorder_level)
+CREATE VIEW v_low_stock_items AS
 SELECT
     item_id,
     farm_id,
@@ -338,10 +345,10 @@ SELECT
     supplier_phone,
     total_valuation
 FROM v_current_stock_levels
-WHERE current_stock > 0 AND (current_stock <= 10.0 OR current_stock <= reorder_level);
+WHERE current_stock > 0 AND current_stock <= reorder_level;
 
 -- View 3: Out of Stock Items (Zero units available)
-CREATE VIEW IF NOT EXISTS v_out_of_stock_items AS
+CREATE VIEW v_out_of_stock_items AS
 SELECT
     item_id,
     farm_id,
@@ -359,7 +366,7 @@ FROM v_current_stock_levels
 WHERE current_stock <= 0;
 
 -- View 4: Monthly Inventory Value & Movement Trends
-CREATE VIEW IF NOT EXISTS v_monthly_inventory_value AS
+CREATE VIEW v_monthly_inventory_value AS
 SELECT
     strftime('%Y-%m', t.transaction_date) AS month_year,
     COUNT(t.id) AS transaction_count,
@@ -376,7 +383,7 @@ GROUP BY strftime('%Y-%m', t.transaction_date)
 ORDER BY month_year ASC;
 
 -- View 5: Estimated vs Actual Yield per Cycle with Variance Percentage
-CREATE VIEW IF NOT EXISTS v_estimated_vs_actual_yield AS
+CREATE VIEW v_estimated_vs_actual_yield AS
 SELECT
     c.id AS cycle_id,
     f.id AS farm_id,
