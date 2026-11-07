@@ -144,88 +144,168 @@ export default function InventoryItemsPage({ onOpenNewItem, farmId }) {
             </p>
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse text-xs min-w-[700px]">
-              <thead>
-                <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase tracking-wider text-xs">
-                  <th className="py-3 px-4">SKU / Item Name</th>
-                  <th className="py-3 px-4">Category</th>
-                  <th className="py-3 px-4 text-right">Current Stock</th>
-                  <th className="py-3 px-4 text-right">Unit Cost</th>
-                  <th className="py-3 px-4 text-right">Asset Valuation</th>
-                  <th className="py-3 px-4 text-right">Reorder Level</th>
-                  <th className="py-3 px-4">Status</th>
-                  <th className="py-3 px-4">Supplier</th>
-                  <th className="py-3 px-4 text-center">Action</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100 text-slate-700">
-                {filteredItems.map((item) => (
-                  <tr key={item.item_id} className="hover:bg-slate-50/70 transition-colors">
-                    <td className="py-3 px-4 font-bold text-slate-900">
-                      {item.item_name}
-                      <span className="block text-xs font-normal text-slate-400 font-mono">
-                        ID: #{item.item_id} &bull; Farm: {item.farm_name}
+          <div>
+            {/* Mobile Stacked Card View (Screens < 640px) */}
+            <div className="sm:hidden divide-y divide-slate-100">
+              {filteredItems.map((item) => (
+                <div key={item.item_id} className="p-4 space-y-2.5 hover:bg-slate-50/50">
+                  <div className="flex items-start justify-between gap-2">
+                    <div>
+                      <h4 className="font-bold text-slate-900 text-sm">{item.item_name}</h4>
+                      <span className="text-[11px] text-slate-400 font-mono">
+                        SKU #{item.item_id} &bull; {item.farm_name}
                       </span>
-                    </td>
-                    <td className="py-3 px-4">
-                      <span className="inline-block px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-700 border border-slate-200">
+                    </div>
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      <span className="inline-block px-2 py-0.5 rounded-full text-[11px] font-medium bg-slate-100 text-slate-700 border border-slate-200">
                         {item.category}
                       </span>
-                    </td>
-                    <td className="py-3 px-4 text-right font-mono font-bold text-slate-900">
-                      {item.current_stock} <span className="font-normal text-slate-500">{item.unit}</span>
-                    </td>
-                    <td className="py-3 px-4 text-right font-medium text-slate-800">
-                      ₹{item.unit_cost.toLocaleString()}
-                    </td>
-                    <td className="py-3 px-4 text-right font-bold text-slate-900">
-                      ₹{item.total_valuation.toLocaleString()}
-                    </td>
-                    <td className="py-3 px-4 text-right font-medium text-slate-500">
-                      {item.reorder_level} {item.unit}
-                    </td>
-                    <td className="py-3 px-4">
+                      <button
+                        onClick={() => handleDelete(item.item_id, item.item_name)}
+                        className="p-1 rounded text-slate-400 hover:text-rose-600 active:bg-rose-50"
+                        title="Delete Item"
+                        aria-label={`Delete ${item.item_name}`}
+                      >
+                        <Trash2 className="w-4 h-4 text-slate-400" />
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* 2x2 Key Numbers Grid */}
+                  <div className="grid grid-cols-2 gap-2 bg-slate-50 p-2.5 rounded-xl border border-slate-100 text-xs">
+                    <div>
+                      <span className="text-[10px] uppercase font-semibold text-slate-400 block">Current Stock</span>
+                      <span className="font-bold text-slate-900 text-sm font-mono">
+                        {item.current_stock} <span className="text-xs font-normal text-slate-500">{item.unit}</span>
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] uppercase font-semibold text-slate-400 block">Asset Valuation</span>
+                      <span className="font-bold text-slate-900 text-sm font-mono">
+                        ₹{item.total_valuation.toLocaleString()}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] uppercase font-semibold text-slate-400 block">Unit Cost</span>
+                      <span className="font-semibold text-slate-700">₹{item.unit_cost.toLocaleString()}</span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] uppercase font-semibold text-slate-400 block">Reorder Level</span>
+                      <span className="font-medium text-slate-600">{item.reorder_level} {item.unit}</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between text-xs pt-0.5">
+                    <div>
                       {item.stock_status === 'Out of Stock' ? (
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-rose-50 text-rose-700 border border-rose-200">
+                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200">
                           <XCircle className="w-3.5 h-3.5 text-rose-500" />
                           Out of Stock
                         </span>
                       ) : item.stock_status === 'Low Stock' ? (
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200">
+                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200">
                           <AlertCircle className="w-3.5 h-3.5 text-amber-500" />
                           Low Stock
                         </span>
                       ) : (
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
                           <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
                           In Stock
                         </span>
                       )}
-                    </td>
-                    <td className="py-3 px-4">
-                      {item.supplier_name ? (
-                        <div>
-                          <div className="font-medium text-slate-800">{item.supplier_name}</div>
-                          <div className="text-xs text-slate-400">{item.supplier_phone}</div>
-                        </div>
-                      ) : (
-                        <span className="text-slate-400 italic">None assigned</span>
-                      )}
-                    </td>
-                    <td className="py-3 px-4 text-center">
-                      <button
-                        onClick={() => handleDelete(item.item_id, item.item_name)}
-                        className="p-1 rounded text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors"
-                        title="Delete Item"
-                      >
-                        <Trash2 className="w-3.5 h-3.5" />
-                      </button>
-                    </td>
+                    </div>
+                    <span className="text-[11px] text-slate-400 truncate max-w-[150px]">
+                      {item.supplier_name ? `Vendor: ${item.supplier_name}` : 'No Vendor'}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Desktop Table View (Screens >= 640px) */}
+            <div className="hidden sm:block overflow-x-auto w-full">
+              <table className="w-full text-left border-collapse text-xs min-w-[700px]">
+                <thead>
+                  <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase tracking-wider text-xs">
+                    <th className="py-3 px-4">SKU / Item Name</th>
+                    <th className="py-3 px-4">Category</th>
+                    <th className="py-3 px-4 text-right">Current Stock</th>
+                    <th className="py-3 px-4 text-right">Unit Cost</th>
+                    <th className="py-3 px-4 text-right">Asset Valuation</th>
+                    <th className="py-3 px-4 text-right">Reorder Level</th>
+                    <th className="py-3 px-4">Status</th>
+                    <th className="py-3 px-4">Supplier</th>
+                    <th className="py-3 px-4 text-center">Action</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-slate-100 text-slate-700">
+                  {filteredItems.map((item) => (
+                    <tr key={item.item_id} className="hover:bg-slate-50/70 transition-colors">
+                      <td className="py-3 px-4 font-bold text-slate-900">
+                        {item.item_name}
+                        <span className="block text-xs font-normal text-slate-400 font-mono">
+                          ID: #{item.item_id} &bull; Farm: {item.farm_name}
+                        </span>
+                      </td>
+                      <td className="py-3 px-4">
+                        <span className="inline-block px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-700 border border-slate-200">
+                          {item.category}
+                        </span>
+                      </td>
+                      <td className="py-3 px-4 text-right font-mono font-bold text-slate-900">
+                        {item.current_stock} <span className="font-normal text-slate-500">{item.unit}</span>
+                      </td>
+                      <td className="py-3 px-4 text-right font-medium text-slate-800">
+                        ₹{item.unit_cost.toLocaleString()}
+                      </td>
+                      <td className="py-3 px-4 text-right font-bold text-slate-900">
+                        ₹{item.total_valuation.toLocaleString()}
+                      </td>
+                      <td className="py-3 px-4 text-right font-medium text-slate-500">
+                        {item.reorder_level} {item.unit}
+                      </td>
+                      <td className="py-3 px-4">
+                        {item.stock_status === 'Out of Stock' ? (
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-rose-50 text-rose-700 border border-rose-200">
+                            <XCircle className="w-3.5 h-3.5 text-rose-500" />
+                            Out of Stock
+                          </span>
+                        ) : item.stock_status === 'Low Stock' ? (
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200">
+                            <AlertCircle className="w-3.5 h-3.5 text-amber-500" />
+                            Low Stock
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+                            In Stock
+                          </span>
+                        )}
+                      </td>
+                      <td className="py-3 px-4">
+                        {item.supplier_name ? (
+                          <div>
+                            <div className="font-medium text-slate-800">{item.supplier_name}</div>
+                            <div className="text-xs text-slate-400">{item.supplier_phone}</div>
+                          </div>
+                        ) : (
+                          <span className="text-slate-400 italic">None assigned</span>
+                        )}
+                      </td>
+                      <td className="py-3 px-4 text-center">
+                        <button
+                          onClick={() => handleDelete(item.item_id, item.item_name)}
+                          className="p-1 rounded text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors"
+                          title="Delete Item"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
       </div>

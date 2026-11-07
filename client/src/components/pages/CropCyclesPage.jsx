@@ -143,8 +143,112 @@ export default function CropCyclesPage({
             </p>
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse text-xs min-w-[720px]">
+          <>
+            {/* Mobile Cards View (<640px) */}
+            <div className="sm:hidden divide-y divide-slate-100">
+              {filtered.map((c) => {
+                const isHarvested = c.status === 'Harvested';
+                const variancePct = c.variance_percentage;
+                const isDeficit = isHarvested && variancePct < -15.0;
+
+                return (
+                  <div key={c.id} className="p-4 space-y-3 bg-white">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xl">{CROP_EMOJIS[c.crop_name] || '🌱'}</span>
+                        <div>
+                          <div className="flex items-center gap-1.5">
+                            <span className="font-bold text-sm text-slate-900">{c.crop_name}</span>
+                            <span className="font-mono text-xs text-slate-400">#{c.id}</span>
+                          </div>
+                          <p className="text-xs text-slate-500">{c.variety_name} &bull; {c.season}</p>
+                        </div>
+                      </div>
+                      <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold shrink-0 ${
+                        c.status === 'Growing' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' :
+                        c.status === 'Sown' ? 'bg-blue-50 text-blue-700 border border-blue-200' :
+                        c.status === 'Planned' ? 'bg-amber-50 text-amber-700 border border-amber-200' :
+                        c.status === 'Harvested' ? 'bg-purple-50 text-purple-700 border border-purple-200' :
+                        'bg-slate-100 text-slate-600 border border-slate-200'
+                      }`}>
+                        <span>{c.status}</span>
+                      </span>
+                    </div>
+
+                    <div className="bg-slate-50 rounded-lg p-2.5 grid grid-cols-2 gap-2 text-xs">
+                      <div>
+                        <span className="text-slate-400 block text-[11px]">Plot</span>
+                        <span className="font-semibold text-slate-800">{c.plot_name}</span>
+                        <span className="text-[10px] text-slate-400 block">{c.plot_code} &bull; {c.area_acres} ac</span>
+                      </div>
+                      <div>
+                        <span className="text-slate-400 block text-[11px]">Timeline</span>
+                        <span className="font-semibold text-slate-800">Sown: {c.sowing_date}</span>
+                        <span className="text-[10px] text-slate-400 block">Harvest: {c.actual_harvest_date || c.expected_harvest_date}</span>
+                      </div>
+                      <div>
+                        <span className="text-slate-400 block text-[11px]">Est. Yield</span>
+                        <span className="font-semibold text-slate-800">{c.estimated_yield} {c.standard_yield_unit}</span>
+                      </div>
+                      <div>
+                        <span className="text-slate-400 block text-[11px]">Actual Harvest</span>
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          <span className="font-bold text-slate-900">
+                            {isHarvested ? `${c.actual_yield} ${c.standard_yield_unit}` : 'Growing'}
+                          </span>
+                          {isHarvested && (
+                            <span className={`text-[10px] font-bold px-1.5 py-0.2 rounded ${
+                              variancePct >= 0 ? 'bg-emerald-100 text-emerald-800' : isDeficit ? 'bg-rose-100 text-rose-800' : 'bg-amber-100 text-amber-800'
+                            }`}>
+                              {variancePct > 0 ? `+${variancePct}` : variancePct}%
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-end gap-2 pt-1 border-t border-slate-100">
+                      <button
+                        onClick={() => {
+                          soundManager.playPop();
+                          onOpenLogUsage && onOpenLogUsage(c.id);
+                        }}
+                        className="px-3 py-1.5 min-h-[40px] rounded-lg border border-slate-200 text-xs font-semibold text-slate-700 hover:bg-slate-50 flex items-center gap-1"
+                      >
+                        <Sprout className="w-3.5 h-3.5 text-emerald-600" />
+                        <span>Log Usage</span>
+                      </button>
+                      {c.status !== 'Harvested' && (
+                        <button
+                          onClick={() => {
+                            soundManager.playPop();
+                            onOpenRecordHarvest && onOpenRecordHarvest(c.id);
+                          }}
+                          className="px-3 py-1.5 min-h-[40px] rounded-lg bg-purple-50 border border-purple-200 text-xs font-semibold text-purple-700 hover:bg-purple-100 flex items-center gap-1"
+                        >
+                          <Scissors className="w-3.5 h-3.5" />
+                          <span>Harvest</span>
+                        </button>
+                      )}
+                      <button
+                        onClick={() => {
+                          soundManager.playPop();
+                          handleDelete(c.id);
+                        }}
+                        className="p-2 min-h-[40px] min-w-[40px] flex items-center justify-center rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50"
+                        title="Delete Cycle"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Desktop Table (>=640px) */}
+            <div className="hidden sm:block overflow-x-auto">
+              <table className="w-full text-left border-collapse text-xs min-w-[720px]">
               <thead>
                 <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase tracking-wider text-xs">
                   <th className="py-3 px-4">Cycle ID</th>
@@ -282,6 +386,7 @@ export default function CropCyclesPage({
               </tbody>
             </table>
           </div>
+        </>
         )}
       </div>
     </div>

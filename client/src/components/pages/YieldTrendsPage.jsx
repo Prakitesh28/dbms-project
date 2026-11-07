@@ -153,16 +153,16 @@ export default function YieldTrendsPage() {
             </div>
           ) : (
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={chartData} margin={{ top: 20, right: 30, left: 10, bottom: 20 }}>
+              <BarChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 20 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
                 <XAxis 
                   dataKey="season" 
-                  tick={{ fontSize: 11, fill: '#64748b' }} 
+                  tick={{ fontSize: 10, fill: '#64748b' }} 
                   axisLine={{ stroke: '#e2e8f0' }}
                   tickLine={false}
                 />
                 <YAxis 
-                  tick={{ fontSize: 11, fill: '#64748b' }} 
+                  tick={{ fontSize: 10, fill: '#64748b' }} 
                   axisLine={{ stroke: '#e2e8f0' }}
                   tickLine={false}
                 />
@@ -170,7 +170,7 @@ export default function YieldTrendsPage() {
                   formatter={(val, name) => [`${val.toLocaleString()} units`, name]}
                   contentStyle={{ borderRadius: '8px', border: '1px solid #e2e8f0', fontSize: '12px' }}
                 />
-                <Legend wrapperStyle={{ fontSize: '12px', paddingTop: '10px' }} />
+                <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '10px' }} />
                 {crops.map((crop, idx) => (
                   <Bar
                     key={crop.id}
@@ -193,7 +193,59 @@ export default function YieldTrendsPage() {
           <h3 className="text-sm font-bold text-slate-900">Historical Cycles Yield Variance Ledger</h3>
           <span className="text-xs text-slate-500">{cycles.length} Total Harvested Cycles</span>
         </div>
-        <div className="overflow-x-auto">
+        {/* Mobile Stacked Cards (<640px) */}
+        <div className="sm:hidden divide-y divide-slate-100">
+          {cycles.map((c) => (
+            <div key={c.cycle_id} className={`p-4 space-y-2.5 ${c.is_deficit_flagged ? 'bg-rose-50/40' : 'bg-white'}`}>
+              <div className="flex items-start justify-between gap-2">
+                <div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="font-bold text-sm text-slate-900">{c.crop_name}</span>
+                    <span className="font-mono text-xs text-slate-400">#{c.cycle_id}</span>
+                  </div>
+                  <p className="text-xs text-slate-500">{c.variety_name} &bull; {c.season}</p>
+                </div>
+                <div>
+                  {c.is_deficit_flagged ? (
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold bg-rose-100 text-rose-800">
+                      <AlertTriangle className="w-3 h-3 text-rose-600" />
+                      {c.variance_percentage}%
+                    </span>
+                  ) : (
+                    <span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${
+                      c.variance_percentage >= 0 ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'
+                    }`}>
+                      {c.variance_percentage > 0 ? `+${c.variance_percentage}` : c.variance_percentage}%
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              <div className="bg-slate-50 rounded-lg p-2.5 grid grid-cols-2 gap-2 text-xs">
+                <div>
+                  <span className="text-slate-400 block text-[11px]">Plot</span>
+                  <span className="font-semibold text-slate-800">{c.plot_name}</span>
+                  <span className="text-[10px] text-slate-400 block font-mono">{c.plot_code}</span>
+                </div>
+                <div>
+                  <span className="text-slate-400 block text-[11px]">Yield Per Acre</span>
+                  <span className="font-semibold text-slate-800">{c.actual_per_acre} / ac</span>
+                </div>
+                <div>
+                  <span className="text-slate-400 block text-[11px]">Estimated</span>
+                  <span className="font-semibold text-slate-800">{c.estimated_yield} {c.standard_yield_unit}</span>
+                </div>
+                <div>
+                  <span className="text-slate-400 block text-[11px]">Harvested</span>
+                  <span className="font-bold text-slate-900">{c.actual_yield} {c.standard_yield_unit}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Desktop Table (>=640px) */}
+        <div className="hidden sm:block overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs min-w-[720px]">
             <thead>
               <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase tracking-wider text-xs">

@@ -198,63 +198,116 @@ export default function InventoryTransactionsPage({ onOpenLogUsage, onOpenNewTra
             </p>
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse text-xs min-w-[720px]">
-              <thead>
-                <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase tracking-wider text-xs">
-                  <th className="py-3 px-4">Tx ID</th>
-                  <th className="py-3 px-4">Date</th>
-                  <th className="py-3 px-4">Type</th>
-                  <th className="py-3 px-4">Item SKU</th>
-                  <th className="py-3 px-4 text-right">Quantity</th>
-                  <th className="py-3 px-4 text-right">Unit Cost</th>
-                  <th className="py-3 px-4 text-right">Total Cost</th>
-                  <th className="py-3 px-4">Allocated Cycle / Plot</th>
-                  <th className="py-3 px-4">Audited Notes</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100 text-slate-700">
-                {filtered.map((t) => (
-                  <tr key={t.id} className="hover:bg-slate-50/70 transition-colors">
-                    <td className="py-3 px-4 font-mono font-bold text-slate-900">#{t.id}</td>
-                    <td className="py-3 px-4 font-medium text-slate-800">{t.transaction_date}</td>
-                    <td className="py-3 px-4">{getTypeBadge(t.transaction_type)}</td>
-                    <td className="py-3 px-4">
-                      <span className="font-bold text-slate-900 block">{t.item_name}</span>
-                      <span className="text-xs text-slate-400 font-mono">Cat: {t.item_category}</span>
-                    </td>
-                    <td className="py-3 px-4 text-right font-mono font-bold text-slate-900">
-                      {t.quantity} <span className="font-normal text-slate-500">{t.unit}</span>
-                    </td>
-                    <td className="py-3 px-4 text-right font-medium text-slate-800">
-                      ₹{t.unit_cost.toLocaleString()}
-                    </td>
-                    <td className="py-3 px-4 text-right font-bold text-slate-900">
-                      ₹{t.total_cost.toLocaleString()}
-                    </td>
-                    <td className="py-3 px-4">
+          <div>
+            {/* Mobile Stacked Cards View (Screens < 640px) */}
+            <div className="sm:hidden divide-y divide-slate-100">
+              {filtered.map((t) => (
+                <div key={t.id} className="p-4 space-y-2 hover:bg-slate-50/50">
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono font-bold text-slate-900 text-xs">#{t.id}</span>
+                      <span className="text-[11px] text-slate-400 font-medium">{t.transaction_date}</span>
+                    </div>
+                    <div>{getTypeBadge(t.transaction_type)}</div>
+                  </div>
+
+                  <div className="flex items-baseline justify-between gap-2">
+                    <div>
+                      <h4 className="font-bold text-slate-900 text-sm">{t.item_name}</h4>
+                      <span className="text-[11px] text-slate-500 font-medium">{t.item_category}</span>
+                    </div>
+                    <div className="text-right">
+                      <span className="font-mono font-bold text-slate-900 text-sm block">
+                        {t.quantity} <span className="text-xs font-normal text-slate-500">{t.unit}</span>
+                      </span>
+                      <span className="text-xs font-bold text-emerald-700">₹{t.total_cost.toLocaleString()}</span>
+                    </div>
+                  </div>
+
+                  {/* Allocation or Supplier & Notes */}
+                  <div className="text-xs text-slate-500 bg-slate-50 p-2 rounded-lg border border-slate-100 flex items-center justify-between">
+                    <div className="truncate">
                       {t.crop_cycle_id ? (
-                        <div>
-                          <span className="font-semibold text-slate-800">
-                            {t.crop_name} ({t.plot_code})
-                          </span>
-                          <span className="block text-xs text-slate-400">
-                            Cycle #{t.crop_cycle_id} &bull; {t.cycle_season}
-                          </span>
-                        </div>
+                        <span className="font-medium text-slate-700">
+                          🌱 {t.crop_name} ({t.plot_code}) &bull; #{t.crop_cycle_id}
+                        </span>
                       ) : t.supplier_name ? (
-                        <span className="text-slate-600 font-medium">Supplier: {t.supplier_name}</span>
+                        <span className="text-slate-600">Vendor: {t.supplier_name}</span>
                       ) : (
-                        <span className="text-slate-400 italic">General Farm Stock</span>
+                        <span className="italic text-slate-400">General Farm Stock</span>
                       )}
-                    </td>
-                    <td className="py-3 px-4 text-slate-500 max-w-xs truncate" title={t.notes}>
-                      {t.notes || <span className="text-slate-300 italic">None</span>}
-                    </td>
+                    </div>
+                    <span className="text-[10px] text-slate-400 font-mono shrink-0">@₹{t.unit_cost}/{t.unit}</span>
+                  </div>
+
+                  {t.notes && (
+                    <p className="text-[11px] text-slate-400 italic truncate" title={t.notes}>
+                      Note: {t.notes}
+                    </p>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* Desktop Table View (Screens >= 640px) */}
+            <div className="hidden sm:block overflow-x-auto w-full">
+              <table className="w-full text-left border-collapse text-xs min-w-[720px]">
+                <thead>
+                  <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase tracking-wider text-xs">
+                    <th className="py-3 px-4">Tx ID</th>
+                    <th className="py-3 px-4">Date</th>
+                    <th className="py-3 px-4">Type</th>
+                    <th className="py-3 px-4">Item SKU</th>
+                    <th className="py-3 px-4 text-right">Quantity</th>
+                    <th className="py-3 px-4 text-right">Unit Cost</th>
+                    <th className="py-3 px-4 text-right">Total Cost</th>
+                    <th className="py-3 px-4">Allocated Cycle / Plot</th>
+                    <th className="py-3 px-4">Audited Notes</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-slate-100 text-slate-700">
+                  {filtered.map((t) => (
+                    <tr key={t.id} className="hover:bg-slate-50/70 transition-colors">
+                      <td className="py-3 px-4 font-mono font-bold text-slate-900">#{t.id}</td>
+                      <td className="py-3 px-4 font-medium text-slate-800">{t.transaction_date}</td>
+                      <td className="py-3 px-4">{getTypeBadge(t.transaction_type)}</td>
+                      <td className="py-3 px-4">
+                        <span className="font-bold text-slate-900 block">{t.item_name}</span>
+                        <span className="text-xs text-slate-400 font-mono">Cat: {t.item_category}</span>
+                      </td>
+                      <td className="py-3 px-4 text-right font-mono font-bold text-slate-900">
+                        {t.quantity} <span className="font-normal text-slate-500">{t.unit}</span>
+                      </td>
+                      <td className="py-3 px-4 text-right font-medium text-slate-800">
+                        ₹{t.unit_cost.toLocaleString()}
+                      </td>
+                      <td className="py-3 px-4 text-right font-bold text-slate-900">
+                        ₹{t.total_cost.toLocaleString()}
+                      </td>
+                      <td className="py-3 px-4">
+                        {t.crop_cycle_id ? (
+                          <div>
+                            <span className="font-semibold text-slate-800">
+                              {t.crop_name} ({t.plot_code})
+                            </span>
+                            <span className="block text-xs text-slate-400">
+                              Cycle #{t.crop_cycle_id} &bull; {t.cycle_season}
+                            </span>
+                          </div>
+                        ) : t.supplier_name ? (
+                          <span className="text-slate-600 font-medium">Supplier: {t.supplier_name}</span>
+                        ) : (
+                          <span className="text-slate-400 italic">General Farm Stock</span>
+                        )}
+                      </td>
+                      <td className="py-3 px-4 text-slate-500 max-w-xs truncate" title={t.notes}>
+                        {t.notes || <span className="text-slate-300 italic">None</span>}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
       </div>

@@ -161,7 +161,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col font-sans text-slate-800">
+    <div className="min-h-screen bg-slate-50 flex flex-col font-sans text-slate-800 w-full overflow-x-hidden">
       {/* Sidebar Navigation */}
       <Sidebar
         currentSection={currentSection}
@@ -183,7 +183,7 @@ export default function App() {
       />
 
       {/* Main Content Area */}
-      <div className="lg:pl-64 flex flex-col flex-1">
+      <div className="lg:pl-64 flex flex-col flex-1 min-w-0 w-full overflow-x-hidden">
         {/* Top Header Bar */}
         <Header
           onOpenMobileMenu={() => setMobileMenuOpen(true)}
@@ -451,7 +451,19 @@ export default function App() {
           if (sec === 'operations') setActiveDashboardTab('operations');
           if (sec === 'dashboard') setActiveDashboardTab('inventory');
         }}
-        onOpenQuickAction={() => setCommandPaletteOpen(true)}
+        onAction={(action) => {
+          if (action === 'log-usage') {
+            setActiveUsageCycleId(null);
+            setLogUsageModalOpen(true);
+          } else if (action === 'new-item') {
+            setNewItemModalOpen(true);
+          } else if (action === 'record-sale') {
+            setActiveSaleHarvestId(null);
+            setRecordSaleModalOpen(true);
+          } else if (action === 'new-cycle') {
+            setNewCropCycleModalOpen(true);
+          }
+        }}
       />
     </div>
   );

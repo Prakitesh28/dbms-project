@@ -10,7 +10,8 @@
     "seed": "node server/db/seed.js",
     "start": "node server/index.js",
     "server": "node server/index.js",
-    "client": "npm --prefix client run dev"
+    "client": "npm --prefix client run dev",
+    "test:responsive": "node test_mobile_responsive.cjs"
   },
   "keywords": [
     "dbms",
@@ -22,5 +23,8 @@
     "sql"
   ],
   "author": "FarmLedger Project Team",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "playwright": "^1.65.0"
+  }
 }

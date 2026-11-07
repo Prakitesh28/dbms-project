@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   LayoutDashboard, 
   CheckSquare, 
@@ -31,6 +31,17 @@ export default function Sidebar({
 }) {
   const [inventorySubmenuOpen, setInventorySubmenuOpen] = useState(true);
 
+  // Close sidebar on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && mobileOpen && setMobileOpen) {
+        setMobileOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [mobileOpen, setMobileOpen]);
+
   const selectedFarm = farms.find(f => f.id === Number(selectedFarmId)) || farms[0];
 
   const handleNav = (section) => {
@@ -44,14 +55,15 @@ export default function Sidebar({
       {/* Mobile backdrop */}
       {mobileOpen && (
         <div 
-          className="fixed inset-0 bg-slate-900/30 backdrop-blur-xs z-40 lg:hidden"
+          className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-40 lg:hidden transition-opacity"
           onClick={() => setMobileOpen(false)}
+          aria-hidden="true"
         />
       )}
 
       <aside className={`
-        fixed top-0 bottom-0 left-0 z-50 w-64 bg-white border-r border-slate-200 flex flex-col transition-transform duration-200 ease-in-out
-        ${mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+        fixed top-0 bottom-0 left-0 z-50 w-72 max-w-[85vw] bg-white border-r border-slate-200 flex flex-col transition-transform duration-300 ease-in-out
+        ${mobileOpen ? 'translate-x-0 shadow-2xl' : '-translate-x-full lg:translate-x-0 lg:shadow-none'}
       `}>
         {/* Brand / Logo & Mobile Close */}
         <div className="h-16 px-6 border-b border-slate-100 flex items-center justify-between">

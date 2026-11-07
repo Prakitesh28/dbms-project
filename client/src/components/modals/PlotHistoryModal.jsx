@@ -42,10 +42,10 @@ export default function PlotHistoryModal({ isOpen, onClose, plotId }) {
   const history = data?.history || [];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs animate-in fade-in duration-200">
-      <div className="bg-white rounded-2xl shadow-xl w-full max-w-4xl max-h-[90vh] flex flex-col border border-slate-200 overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200">
+      <div className="bg-white rounded-t-2xl sm:rounded-2xl shadow-2xl w-full max-w-4xl max-h-[92vh] flex flex-col border border-slate-200 overflow-hidden">
         {/* Header */}
-        <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+        <div className="px-5 sm:px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50 shrink-0">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center">
               <History className="w-5 h-5" />
@@ -64,7 +64,7 @@ export default function PlotHistoryModal({ isOpen, onClose, plotId }) {
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
+            className="w-10 h-10 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -160,10 +160,10 @@ export default function PlotHistoryModal({ isOpen, onClose, plotId }) {
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-3 border-t border-slate-100 bg-slate-50/50 flex justify-end">
+        <div className="px-5 sm:px-6 py-3 border-t border-slate-100 bg-slate-50/50 flex justify-end">
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-slate-900 text-white rounded-lg text-xs font-semibold hover:bg-slate-800 transition-colors"
+            className="w-full sm:w-auto px-5 py-2.5 min-h-[44px] bg-slate-900 text-white rounded-lg text-xs font-semibold hover:bg-slate-800 transition-colors"
           >
             Close History
           </button>
