@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import WeatherModal from './components/WeatherModal';
+import CommandPalette from './components/CommandPalette';
+import FarmAmbientBanner from './components/FarmAmbientBanner';
+import AchievementToast from './components/AchievementToast';
 
 // Tabs for Main Dashboard
 import InventoryTab from './components/tabs/InventoryTab';
@@ -27,6 +30,7 @@ import NewCropCycleModal from './components/modals/NewCropCycleModal';
 import NewPlotModal from './components/modals/NewPlotModal';
 
 import { api } from './services/api';
+import { soundManager, triggerConfetti, achievementsManager } from './utils/fun';
 
 export default function App() {
   // Navigation & View state
@@ -63,6 +67,21 @@ export default function App() {
   const [newItemModalOpen, setNewItemModalOpen] = useState(false);
   const [newCropCycleModalOpen, setNewCropCycleModalOpen] = useState(false);
   const [newPlotModalOpen, setNewPlotModalOpen] = useState(false);
+
+  // Command Palette & Fun Features State
+  const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
+
+  // Global Keyboard Shortcuts (Ctrl+K / Cmd+K)
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setCommandPaletteOpen(prev => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   // Initial Data Load
   useEffect(() => {
@@ -135,6 +154,9 @@ export default function App() {
   const handleRefreshAll = () => {
     loadDashboardData();
     loadWeather();
+    soundManager.playSuccess();
+    triggerConfetti({ count: 50 });
+    achievementsManager.unlock('green_thumb');
   };
 
   return (
@@ -172,10 +194,20 @@ export default function App() {
             setActiveUsageCycleId(null);
             setLogUsageModalOpen(true);
           }}
+          onOpenCommandPalette={() => setCommandPaletteOpen(true)}
         />
 
         {/* Page Content */}
         <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto space-y-6">
+          {/* Farm Ambient Greeting & Trivia Mascot */}
+          <FarmAmbientBanner
+            farmName={farms.find(f => f.id === selectedFarmId)?.name || 'FarmLedger Demo Farm'}
+            onNavigateToLab={(subTab) => {
+              setCurrentSection('dbms-lab');
+            }}
+            onOpenWeather={() => setWeatherModalOpen(true)}
+          />
+
           {/* Main Dashboard View (with 3 Tabs: Financial, Operations, Inventory) */}
           {(currentSection === 'dashboard' || currentSection === 'accounting' || currentSection === 'operations') && (
             <div className="space-y-6">
@@ -191,7 +223,10 @@ export default function App() {
                 {/* The 3 Tabs */}
                 <div className="flex items-center gap-1.5 p-1 bg-slate-200/70 rounded-xl border border-slate-200 self-start md:self-auto">
                   <button
-                    onClick={() => setActiveDashboardTab('financial')}
+                    onClick={() => {
+                      soundManager.playPop();
+                      setActiveDashboardTab('financial');
+                    }}
                     className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
                       activeDashboardTab === 'financial'
                         ? 'bg-white text-slate-900 shadow-2xs'
@@ -201,7 +236,10 @@ export default function App() {
                     Financial
                   </button>
                   <button
-                    onClick={() => setActiveDashboardTab('operations')}
+                    onClick={() => {
+                      soundManager.playPop();
+                      setActiveDashboardTab('operations');
+                    }}
                     className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
                       activeDashboardTab === 'operations'
                         ? 'bg-white text-slate-900 shadow-2xs'
@@ -211,7 +249,10 @@ export default function App() {
                     Operations
                   </button>
                   <button
-                    onClick={() => setActiveDashboardTab('inventory')}
+                    onClick={() => {
+                      soundManager.playPop();
+                      setActiveDashboardTab('inventory');
+                    }}
                     className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
                       activeDashboardTab === 'inventory'
                         ? 'bg-white text-slate-900 shadow-2xs'
@@ -372,6 +413,34 @@ export default function App() {
         farmId={selectedFarmId}
         onSuccess={handleRefreshAll}
       />
+
+      {/* Fun & Interactive Global Utilities */}
+      <CommandPalette
+        isOpen={commandPaletteOpen}
+        onClose={() => setCommandPaletteOpen(false)}
+        onNavigate={(section, subTab) => {
+          setCurrentSection(section);
+          if (section === 'operations') setActiveDashboardTab('operations');
+          if (section === 'accounting') setActiveDashboardTab('financial');
+          if (section === 'dashboard') setActiveDashboardTab('inventory');
+        }}
+        onAction={(action) => {
+          if (action === 'log-usage') {
+            setActiveUsageCycleId(null);
+            setLogUsageModalOpen(true);
+          } else if (action === 'new-cycle') {
+            setNewCropCycleModalOpen(true);
+          } else if (action === 'new-plot') {
+            setNewPlotModalOpen(true);
+          } else if (action === 'new-item') {
+            setNewItemModalOpen(true);
+          } else if (action === 'weather') {
+            setWeatherModalOpen(true);
+          }
+        }}
+      />
+
+      <AchievementToast />
     </div>
   );
 }

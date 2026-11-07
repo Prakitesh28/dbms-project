@@ -18,9 +18,18 @@ import {
   Link2, 
   ArrowRight,
   ShieldCheck,
-  RotateCcw
+  ShieldAlert,
+  RotateCcw,
+  Trophy,
+  Sparkles
 } from 'lucide-react';
 import { api } from '../../services/api';
+import { 
+  soundManager, 
+  triggerConfetti, 
+  achievementsManager, 
+  ACHIEVEMENTS 
+} from '../../utils/fun';
 
 export default function DbmsLabPage() {
   const [activeTab, setActiveTab] = useState('er-diagram'); // 'er-diagram' | 'normalisation' | 'triggers' | 'playground' | 'cheat-sheet' | 'quiz'
@@ -75,12 +84,22 @@ export default function DbmsLabPage() {
     }
   };
 
+  const [unlockedAchievements, setUnlockedAchievements] = useState([]);
+
   useEffect(() => {
     loadSchema();
     loadQueries();
+    setUnlockedAchievements(achievementsManager.getUnlocked());
+
+    const handleAch = () => {
+      setUnlockedAchievements(achievementsManager.getUnlocked());
+    };
+    window.addEventListener('farmledger_achievement_unlocked', handleAch);
+    return () => window.removeEventListener('farmledger_achievement_unlocked', handleAch);
   }, []);
 
   const handleSelectQuery = (id) => {
+    soundManager.playPop();
     setSelectedQueryId(id);
     const q = queriesList.find(item => item.id === Number(id));
     if (q) {
@@ -96,6 +115,9 @@ export default function DbmsLabPage() {
       setPlaygroundError(null);
       const res = await api.runPlaygroundQuery(customSql);
       setPlaygroundResult(res);
+      soundManager.playSuccess();
+      triggerConfetti({ count: 45 });
+      achievementsManager.unlock('sql_wizard');
     } catch (err) {
       setPlaygroundError(err.message);
       setPlaygroundResult(null);
@@ -109,6 +131,9 @@ export default function DbmsLabPage() {
       setTestingTrigger(scenario);
       const res = await api.testLiveTrigger(scenario);
       setTriggerResults(prev => ({ ...prev, [scenario]: res }));
+      soundManager.playShield();
+      triggerConfetti({ count: 65 });
+      achievementsManager.unlock('trigger_master');
     } catch (err) {
       setTriggerResults(prev => ({
         ...prev,
@@ -315,6 +340,19 @@ export default function DbmsLabPage() {
     return score;
   };
 
+  const handleCheckQuiz = () => {
+    setShowQuizResults(true);
+    const score = calculateScore();
+    if (score >= 12) {
+      soundManager.playFanfare();
+      triggerConfetti({ count: 120 });
+      achievementsManager.unlock('viva_scholar');
+    } else {
+      soundManager.playSuccess();
+      triggerConfetti({ count: 45 });
+    }
+  };
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -334,7 +372,10 @@ export default function DbmsLabPage() {
         {/* Tab Switcher Pills */}
         <div className="flex flex-wrap items-center gap-1.5 p-1 bg-slate-100/80 rounded-xl border border-slate-200">
           <button
-            onClick={() => setActiveTab('er-diagram')}
+            onClick={() => {
+              soundManager.playPop();
+              setActiveTab('er-diagram');
+            }}
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
               activeTab === 'er-diagram' ? 'bg-white text-emerald-800 shadow-2xs' : 'text-slate-600 hover:text-slate-900'
             }`}
@@ -342,7 +383,10 @@ export default function DbmsLabPage() {
             ER Diagram (10 Tables)
           </button>
           <button
-            onClick={() => setActiveTab('normalisation')}
+            onClick={() => {
+              soundManager.playPop();
+              setActiveTab('normalisation');
+            }}
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
               activeTab === 'normalisation' ? 'bg-white text-emerald-800 shadow-2xs' : 'text-slate-600 hover:text-slate-900'
             }`}
@@ -350,7 +394,10 @@ export default function DbmsLabPage() {
             Normalisation (1NF-3NF)
           </button>
           <button
-            onClick={() => setActiveTab('triggers')}
+            onClick={() => {
+              soundManager.playPop();
+              setActiveTab('triggers');
+            }}
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
               activeTab === 'triggers' ? 'bg-white text-emerald-800 shadow-2xs' : 'text-slate-600 hover:text-slate-900'
             }`}
@@ -358,7 +405,10 @@ export default function DbmsLabPage() {
             Triggers Live Sandbox
           </button>
           <button
-            onClick={() => setActiveTab('playground')}
+            onClick={() => {
+              soundManager.playPop();
+              setActiveTab('playground');
+            }}
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
               activeTab === 'playground' ? 'bg-white text-emerald-800 shadow-2xs' : 'text-slate-600 hover:text-slate-900'
             }`}
@@ -366,7 +416,10 @@ export default function DbmsLabPage() {
             SQL Playground
           </button>
           <button
-            onClick={() => setActiveTab('cheat-sheet')}
+            onClick={() => {
+              soundManager.playPop();
+              setActiveTab('cheat-sheet');
+            }}
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
               activeTab === 'cheat-sheet' ? 'bg-white text-emerald-800 shadow-2xs' : 'text-slate-600 hover:text-slate-900'
             }`}
@@ -374,13 +427,47 @@ export default function DbmsLabPage() {
             Concepts Cheat-Sheet
           </button>
           <button
-            onClick={() => setActiveTab('quiz')}
+            onClick={() => {
+              soundManager.playPop();
+              setActiveTab('quiz');
+            }}
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
               activeTab === 'quiz' ? 'bg-white text-emerald-800 shadow-2xs' : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             DBMS Viva Quiz (15 Qs)
           </button>
+        </div>
+      </div>
+
+      {/* Gamification Mastery Badges Ribbon */}
+      <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-emerald-950 text-white p-3.5 rounded-xl border border-slate-700/60 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-3">
+        <div className="flex items-center gap-2">
+          <Trophy className="w-4 h-4 text-amber-400 shrink-0" />
+          <span className="text-xs font-bold text-amber-300">Viva Mastery Badges:</span>
+          <span className="text-xs text-slate-300 font-medium">
+            {unlockedAchievements.length} of {ACHIEVEMENTS.length} Unlocked
+          </span>
+        </div>
+        <div className="flex items-center gap-2 flex-wrap">
+          {ACHIEVEMENTS.map(ach => {
+            const isUnlocked = unlockedAchievements.includes(ach.id);
+            return (
+              <div 
+                key={ach.id} 
+                title={`${ach.title}: ${ach.description}`}
+                className={`px-2.5 py-1 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all ${
+                  isUnlocked 
+                    ? 'bg-amber-400/20 text-amber-200 border border-amber-400/40 shadow-xs' 
+                    : 'bg-slate-800/80 text-slate-500 border border-slate-700/60 opacity-60'
+                }`}
+              >
+                <span>{ach.icon}</span>
+                <span className="text-[11px]">{ach.title}</span>
+                {isUnlocked && <Sparkles className="w-3 h-3 text-amber-400" />}
+              </div>
+            );
+          })}
         </div>
       </div>
 
@@ -414,7 +501,11 @@ export default function DbmsLabPage() {
                 {schemaData?.tables?.map((table) => (
                   <button
                     key={table.name}
-                    onClick={() => setSelectedTable(table)}
+                    onClick={() => {
+                      soundManager.playPop();
+                      setSelectedTable(table);
+                      achievementsManager.unlock('schema_explorer');
+                    }}
                     className={`w-full flex items-center justify-between p-2.5 rounded-lg text-left transition-all text-xs ${
                       selectedTable?.name === table.name
                         ? 'bg-emerald-50 border border-emerald-300 text-emerald-900 font-bold'
@@ -1135,8 +1226,8 @@ export default function DbmsLabPage() {
               <span>Reset Quiz</span>
             </button>
             <button
-              onClick={() => setShowQuizResults(true)}
-              className="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-lg shadow-2xs transition-colors flex items-center gap-1.5"
+              onClick={handleCheckQuiz}
+              className="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-lg shadow-2xs transition-colors flex items-center gap-1.5 active:scale-98"
             >
               <CheckCircle2 className="w-4 h-4" />
               <span>Check Answers & View Explanations</span>
@@ -1147,3 +1238,4 @@ export default function DbmsLabPage() {
     </div>
   );
 }
+

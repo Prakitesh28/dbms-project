@@ -15,6 +15,16 @@ import {
   Scissors
 } from 'lucide-react';
 import { api } from '../../services/api';
+import { soundManager } from '../../utils/fun';
+
+const CROP_EMOJIS = {
+  'Wheat': '🌾',
+  'Tomato': '🍅',
+  'Maize': '🌽',
+  'Soybean': '🌱',
+  'Cotton': '☁️',
+  'Chickpea': '🫘'
+};
 
 export default function CropCyclesPage({ 
   farmId, 
@@ -165,8 +175,13 @@ export default function CropCyclesPage({
                         </span>
                       </td>
                       <td className="py-3 px-4">
-                        <span className="font-bold text-slate-900">{c.crop_name}</span>
-                        <span className="block text-xs text-slate-500">{c.variety_name}</span>
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-base">{CROP_EMOJIS[c.crop_name] || '🌱'}</span>
+                          <div>
+                            <span className="font-bold text-slate-900">{c.crop_name}</span>
+                            <span className="block text-xs text-slate-500">{c.variety_name}</span>
+                          </div>
+                        </div>
                       </td>
                       <td className="py-3 px-4 font-medium text-slate-800">{c.season}</td>
                       <td className="py-3 px-4">
@@ -210,44 +225,54 @@ export default function CropCyclesPage({
                         )}
                       </td>
                       <td className="py-3 px-4">
-                        <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                        <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold ${
                           c.status === 'Growing' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' :
                           c.status === 'Sown' ? 'bg-blue-50 text-blue-700 border border-blue-200' :
                           c.status === 'Planned' ? 'bg-amber-50 text-amber-700 border border-amber-200' :
                           c.status === 'Harvested' ? 'bg-purple-50 text-purple-700 border border-purple-200' :
                           'bg-slate-100 text-slate-600 border border-slate-200'
                         }`}>
-                          {c.status}
+                          <span>{c.status === 'Growing' ? '🌿' : c.status === 'Harvested' ? '🌾' : c.status === 'Sown' ? '🌱' : '📅'}</span>
+                          <span>{c.status}</span>
                         </span>
                       </td>
                       <td className="py-3 px-4 text-center">
                         <div className="flex items-center justify-center gap-1.5">
                           {/* Log usage against this cycle */}
                           <button
-                            onClick={() => onOpenLogUsage && onOpenLogUsage(c.id)}
-                            className="p-1 rounded text-slate-500 hover:text-emerald-700 hover:bg-emerald-50"
+                            onClick={() => {
+                              soundManager.playPop();
+                              onOpenLogUsage && onOpenLogUsage(c.id);
+                            }}
+                            className="p-1.5 rounded-lg text-slate-500 hover:text-emerald-700 hover:bg-emerald-50 transition-colors"
                             title="Log Input Usage for this cycle"
                           >
-                            <Sprout className="w-3.5 h-3.5" />
+                            <Sprout className="w-4 h-4" />
                           </button>
 
                           {/* Record Harvest */}
                           {c.status !== 'Harvested' && (
                             <button
-                              onClick={() => onOpenRecordHarvest && onOpenRecordHarvest(c.id)}
-                              className="p-1 rounded text-slate-500 hover:text-purple-700 hover:bg-purple-50"
+                              onClick={() => {
+                                soundManager.playPop();
+                                onOpenRecordHarvest && onOpenRecordHarvest(c.id);
+                              }}
+                              className="p-1.5 rounded-lg text-slate-500 hover:text-purple-700 hover:bg-purple-50 transition-colors"
                               title="Record Harvest Quantities"
                             >
-                              <Scissors className="w-3.5 h-3.5" />
+                              <Scissors className="w-4 h-4" />
                             </button>
                           )}
 
                           <button
-                            onClick={() => handleDelete(c.id)}
-                            className="p-1 rounded text-slate-400 hover:text-rose-600 hover:bg-rose-50"
+                            onClick={() => {
+                              soundManager.playPop();
+                              handleDelete(c.id);
+                            }}
+                            className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors"
                             title="Delete Cycle"
                           >
-                            <Trash2 className="w-3.5 h-3.5" />
+                            <Trash2 className="w-4 h-4" />
                           </button>
                         </div>
                       </td>

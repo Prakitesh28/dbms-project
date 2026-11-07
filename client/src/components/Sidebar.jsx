@@ -15,6 +15,7 @@ import {
   Database,
   CloudSun
 } from 'lucide-react';
+import { soundManager } from '../utils/fun';
 
 export default function Sidebar({ 
   currentSection, 
@@ -32,6 +33,7 @@ export default function Sidebar({
   const selectedFarm = farms.find(f => f.id === Number(selectedFarmId)) || farms[0];
 
   const handleNav = (section) => {
+    soundManager.playPop();
     setCurrentSection(section);
     if (setMobileOpen) setMobileOpen(false);
   };
