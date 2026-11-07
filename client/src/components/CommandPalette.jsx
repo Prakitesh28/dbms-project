@@ -96,23 +96,23 @@ export default function CommandPalette({
 
   return (
     <div 
-      className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-start justify-center pt-20 px-4 animate-in fade-in duration-150"
+      className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-start justify-center pt-3 sm:pt-20 px-3 sm:px-4 animate-in fade-in duration-150"
       onClick={onClose}
     >
       <div 
-        className="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-xl overflow-hidden transform transition-all"
+        className="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-xl max-h-[85vh] flex flex-col overflow-hidden transform transition-all"
         onClick={e => e.stopPropagation()}
       >
         {/* Search Input Bar */}
-        <div className="flex items-center gap-3 px-4 py-3.5 border-b border-slate-100 bg-slate-50/60">
-          <Search className="w-5 h-5 text-emerald-600 shrink-0" />
+        <div className="flex items-center gap-2.5 sm:gap-3 px-3.5 sm:px-4 py-3 sm:py-3.5 border-b border-slate-100 bg-slate-50/60 shrink-0">
+          <Search className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600 shrink-0" />
           <input
             ref={inputRef}
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Type a command or jump to page... (e.g. 'ER', 'ROI', 'Quiz', 'Input')"
+            placeholder="Search commands or jump to page..."
             className="w-full bg-transparent text-sm text-slate-900 placeholder-slate-400 focus:outline-hidden"
           />
           <kbd className="hidden sm:inline-flex items-center gap-1 text-[10px] font-mono font-semibold px-2 py-0.5 bg-slate-200/70 border border-slate-300 rounded text-slate-500">
@@ -120,14 +120,14 @@ export default function CommandPalette({
           </kbd>
           <button 
             onClick={onClose}
-            className="sm:hidden text-slate-400 hover:text-slate-600 p-1"
+            className="sm:hidden text-slate-400 hover:text-slate-600 p-1.5 rounded-lg active:bg-slate-200"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Results List */}
-        <div className="max-h-80 overflow-y-auto p-2 divide-y divide-slate-100/60">
+        <div className="flex-1 overflow-y-auto p-2 divide-y divide-slate-100/60 max-h-[60vh] sm:max-h-80">
           {filtered.length === 0 ? (
             <div className="p-8 text-center text-xs text-slate-400">
               No matching commands or pages found.
@@ -189,3 +189,4 @@ export default function CommandPalette({
     </div>
   );
 }
+

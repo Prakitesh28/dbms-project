@@ -24,62 +24,62 @@ export default function FinancialTab({
 
   return (
     <div className="space-y-6">
-      {/* 4 Financial KPI Summary Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* 4 Financial KPI Summary Cards (2-col on mobile, 4-col on desktop) */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         {/* Total Revenue */}
-        <div className="bg-white rounded-xl p-5 border border-slate-200/80 shadow-2xs">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-semibold text-slate-500">Gross Sales Revenue</span>
-            <div className="p-2 bg-emerald-50 text-emerald-600 rounded-lg">
-              <DollarSign className="w-4 h-4" />
+        <div className="bg-white rounded-xl p-3.5 sm:p-5 border border-slate-200/80 shadow-2xs">
+          <div className="flex items-center justify-between mb-1.5 sm:mb-2">
+            <span className="text-[11px] sm:text-xs font-semibold text-slate-500">Gross Revenue</span>
+            <div className="p-1.5 sm:p-2 bg-emerald-50 text-emerald-600 rounded-lg">
+              <DollarSign className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </div>
           </div>
-          <div className="text-2xl font-bold text-slate-900 tracking-tight mb-1">
+          <div className="text-lg sm:text-2xl font-bold text-slate-900 tracking-tight mb-0.5 sm:mb-1 truncate">
             ₹{summary.total_revenue.toLocaleString()}
           </div>
-          <span className="text-xs text-emerald-700 font-medium">From verified harvest sales</span>
+          <span className="text-[10px] sm:text-xs text-emerald-700 font-medium block truncate">Verified harvest sales</span>
         </div>
 
         {/* Input Expenditures */}
-        <div className="bg-white rounded-xl p-5 border border-slate-200/80 shadow-2xs">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-semibold text-slate-500">Total Input Expenses</span>
-            <div className="p-2 bg-amber-50 text-amber-600 rounded-lg">
-              <Receipt className="w-4 h-4" />
+        <div className="bg-white rounded-xl p-3.5 sm:p-5 border border-slate-200/80 shadow-2xs">
+          <div className="flex items-center justify-between mb-1.5 sm:mb-2">
+            <span className="text-[11px] sm:text-xs font-semibold text-slate-500">Input Expenses</span>
+            <div className="p-1.5 sm:p-2 bg-amber-50 text-amber-600 rounded-lg">
+              <Receipt className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </div>
           </div>
-          <div className="text-2xl font-bold text-slate-900 tracking-tight mb-1">
+          <div className="text-lg sm:text-2xl font-bold text-slate-900 tracking-tight mb-0.5 sm:mb-1 truncate">
             ₹{summary.total_costs.toLocaleString()}
           </div>
-          <span className="text-xs text-amber-700 font-medium">Direct seed, fert & pest usages</span>
+          <span className="text-[10px] sm:text-xs text-amber-700 font-medium block truncate">Direct seed & fert usages</span>
         </div>
 
         {/* Net Profit */}
-        <div className="bg-white rounded-xl p-5 border border-slate-200/80 shadow-2xs">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-semibold text-slate-500">Net Farm Profit</span>
-            <div className={`p-2 rounded-lg ${summary.net_profit >= 0 ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600'}`}>
-              <TrendingUp className="w-4 h-4" />
+        <div className="bg-white rounded-xl p-3.5 sm:p-5 border border-slate-200/80 shadow-2xs">
+          <div className="flex items-center justify-between mb-1.5 sm:mb-2">
+            <span className="text-[11px] sm:text-xs font-semibold text-slate-500">Net Farm Profit</span>
+            <div className={`p-1.5 sm:p-2 rounded-lg ${summary.net_profit >= 0 ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600'}`}>
+              <TrendingUp className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </div>
           </div>
-          <div className={`text-2xl font-bold tracking-tight mb-1 ${summary.net_profit >= 0 ? 'text-emerald-700' : 'text-rose-600'}`}>
+          <div className={`text-lg sm:text-2xl font-bold tracking-tight mb-0.5 sm:mb-1 truncate ${summary.net_profit >= 0 ? 'text-emerald-700' : 'text-rose-600'}`}>
             ₹{summary.net_profit.toLocaleString()}
           </div>
-          <span className="text-xs text-slate-500 font-medium">Revenue minus direct inputs</span>
+          <span className="text-[10px] sm:text-xs text-slate-500 font-medium block truncate">Revenue minus inputs</span>
         </div>
 
         {/* ROI % */}
-        <div className="bg-white rounded-xl p-5 border border-slate-200/80 shadow-2xs">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-semibold text-slate-500">Return on Investment</span>
-            <div className="p-2 bg-blue-50 text-blue-600 rounded-lg">
-              <CreditCard className="w-4 h-4" />
+        <div className="bg-white rounded-xl p-3.5 sm:p-5 border border-slate-200/80 shadow-2xs">
+          <div className="flex items-center justify-between mb-1.5 sm:mb-2">
+            <span className="text-[11px] sm:text-xs font-semibold text-slate-500">Farm ROI</span>
+            <div className="p-1.5 sm:p-2 bg-blue-50 text-blue-600 rounded-lg">
+              <CreditCard className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </div>
           </div>
-          <div className="text-2xl font-bold text-slate-900 tracking-tight mb-1">
+          <div className="text-lg sm:text-2xl font-bold text-slate-900 tracking-tight mb-0.5 sm:mb-1">
             {summary.overall_roi}%
           </div>
-          <span className="text-xs text-blue-700 font-medium">Average across all seasons</span>
+          <span className="text-[10px] sm:text-xs text-blue-700 font-medium block truncate">Average across seasons</span>
         </div>
       </div>
 

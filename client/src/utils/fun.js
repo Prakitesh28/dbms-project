@@ -316,3 +316,4 @@ export const FARM_DBMS_TRIVIA = [
   "🌾 Did you know? Crop rotation between Legumes (Chickpea/Soybean) and Cereals (Wheat/Maize) naturally fixes nitrogen into the soil without synthetic inputs!",
   "📊 Pro Tip: SQLite can process over 100,000 prepared statement SELECTs per second in-memory. Fast enough for 1,000 farm plots!"
 ];
+

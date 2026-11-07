@@ -13,7 +13,8 @@ import {
   ChevronDown, 
   ChevronRight,
   Database,
-  CloudSun
+  CloudSun,
+  X
 } from 'lucide-react';
 import { soundManager } from '../utils/fun';
 
@@ -52,7 +53,7 @@ export default function Sidebar({
         fixed top-0 bottom-0 left-0 z-50 w-64 bg-white border-r border-slate-200 flex flex-col transition-transform duration-200 ease-in-out
         ${mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
       `}>
-        {/* Brand / Logo */}
+        {/* Brand / Logo & Mobile Close */}
         <div className="h-16 px-6 border-b border-slate-100 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-lg bg-emerald-600 flex items-center justify-center text-white font-bold shadow-xs">
@@ -63,6 +64,13 @@ export default function Sidebar({
               <span className="text-xs block text-emerald-600 font-medium">Agricultural DBMS</span>
             </div>
           </div>
+          <button
+            onClick={() => setMobileOpen(false)}
+            className="lg:hidden p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
+            aria-label="Close menu"
+          >
+            <X className="w-5 h-5" />
+          </button>
         </div>
 
         {/* Farm Switcher */}

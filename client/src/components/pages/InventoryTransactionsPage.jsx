@@ -199,7 +199,7 @@ export default function InventoryTransactionsPage({ onOpenLogUsage, onOpenNewTra
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse text-xs">
+            <table className="w-full text-left border-collapse text-xs min-w-[720px]">
               <thead>
                 <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase tracking-wider text-xs">
                   <th className="py-3 px-4">Tx ID</th>

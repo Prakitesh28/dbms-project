@@ -369,14 +369,14 @@ export default function DbmsLabPage() {
           </p>
         </div>
 
-        {/* Tab Switcher Pills */}
-        <div className="flex flex-wrap items-center gap-1.5 p-1 bg-slate-100/80 rounded-xl border border-slate-200">
+        {/* Tab Switcher Pills (Smooth horizontal scroll on mobile) */}
+        <div className="flex items-center gap-1.5 p-1 bg-slate-100/80 rounded-xl border border-slate-200 overflow-x-auto no-scrollbar w-full sm:w-auto">
           <button
             onClick={() => {
               soundManager.playPop();
               setActiveTab('er-diagram');
             }}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all shrink-0 whitespace-nowrap ${
               activeTab === 'er-diagram' ? 'bg-white text-emerald-800 shadow-2xs' : 'text-slate-600 hover:text-slate-900'
             }`}
           >
@@ -387,7 +387,7 @@ export default function DbmsLabPage() {
               soundManager.playPop();
               setActiveTab('normalisation');
             }}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all shrink-0 whitespace-nowrap ${
               activeTab === 'normalisation' ? 'bg-white text-emerald-800 shadow-2xs' : 'text-slate-600 hover:text-slate-900'
             }`}
           >
@@ -398,7 +398,7 @@ export default function DbmsLabPage() {
               soundManager.playPop();
               setActiveTab('triggers');
             }}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all shrink-0 whitespace-nowrap ${
               activeTab === 'triggers' ? 'bg-white text-emerald-800 shadow-2xs' : 'text-slate-600 hover:text-slate-900'
             }`}
           >
@@ -409,7 +409,7 @@ export default function DbmsLabPage() {
               soundManager.playPop();
               setActiveTab('playground');
             }}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all shrink-0 whitespace-nowrap ${
               activeTab === 'playground' ? 'bg-white text-emerald-800 shadow-2xs' : 'text-slate-600 hover:text-slate-900'
             }`}
           >
@@ -420,7 +420,7 @@ export default function DbmsLabPage() {
               soundManager.playPop();
               setActiveTab('cheat-sheet');
             }}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all shrink-0 whitespace-nowrap ${
               activeTab === 'cheat-sheet' ? 'bg-white text-emerald-800 shadow-2xs' : 'text-slate-600 hover:text-slate-900'
             }`}
           >
@@ -431,7 +431,7 @@ export default function DbmsLabPage() {
               soundManager.playPop();
               setActiveTab('quiz');
             }}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all shrink-0 whitespace-nowrap ${
               activeTab === 'quiz' ? 'bg-white text-emerald-800 shadow-2xs' : 'text-slate-600 hover:text-slate-900'
             }`}
           >
@@ -440,7 +440,7 @@ export default function DbmsLabPage() {
         </div>
       </div>
 
-      {/* Gamification Mastery Badges Ribbon */}
+      {/* Gamification Mastery Badges Ribbon (Horizontal scroll on mobile) */}
       <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-emerald-950 text-white p-3.5 rounded-xl border border-slate-700/60 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div className="flex items-center gap-2">
           <Trophy className="w-4 h-4 text-amber-400 shrink-0" />
@@ -449,14 +449,14 @@ export default function DbmsLabPage() {
             {unlockedAchievements.length} of {ACHIEVEMENTS.length} Unlocked
           </span>
         </div>
-        <div className="flex items-center gap-2 flex-wrap">
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1 md:pb-0">
           {ACHIEVEMENTS.map(ach => {
             const isUnlocked = unlockedAchievements.includes(ach.id);
             return (
               <div 
                 key={ach.id} 
                 title={`${ach.title}: ${ach.description}`}
-                className={`px-2.5 py-1 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all ${
+                className={`px-2.5 py-1 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all shrink-0 ${
                   isUnlocked 
                     ? 'bg-amber-400/20 text-amber-200 border border-amber-400/40 shadow-xs' 
                     : 'bg-slate-800/80 text-slate-500 border border-slate-700/60 opacity-60'

@@ -8,7 +8,25 @@
     -webkit-font-smoothing: antialiased;
     font-size: 14px;
     line-height: 1.5;
+    -webkit-tap-highlight-color: transparent;
   }
+
+  button, a, select, input {
+    touch-action: manipulation;
+  }
+}
+
+/* Mobile Safe-Area Utilities */
+.pb-safe {
+  padding-bottom: max(0.375rem, env(safe-area-inset-bottom));
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* Custom Clean Scrollbars */

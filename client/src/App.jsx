@@ -5,6 +5,7 @@ import WeatherModal from './components/WeatherModal';
 import CommandPalette from './components/CommandPalette';
 import FarmAmbientBanner from './components/FarmAmbientBanner';
 import AchievementToast from './components/AchievementToast';
+import MobileBottomNav from './components/MobileBottomNav';
 
 // Tabs for Main Dashboard
 import InventoryTab from './components/tabs/InventoryTab';
@@ -198,7 +199,7 @@ export default function App() {
         />
 
         {/* Page Content */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto space-y-6">
+        <main className="flex-1 p-3.5 sm:p-6 lg:p-8 pb-24 lg:pb-8 max-w-7xl w-full mx-auto space-y-5 sm:space-y-6">
           {/* Farm Ambient Greeting & Trivia Mascot */}
           <FarmAmbientBanner
             farmName={farms.find(f => f.id === selectedFarmId)?.name || 'FarmLedger Demo Farm'}
@@ -212,22 +213,22 @@ export default function App() {
           {(currentSection === 'dashboard' || currentSection === 'accounting' || currentSection === 'operations') && (
             <div className="space-y-6">
               {/* Dashboard Title & Subtitle */}
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-2 border-b border-slate-200">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4 pb-2 border-b border-slate-200">
                 <div>
-                  <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Farm Dashboard</h1>
+                  <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">Farm Dashboard</h1>
                   <p className="text-xs text-slate-500 mt-0.5">
                     Comprehensive overview of your farm operations and finances
                   </p>
                 </div>
 
-                {/* The 3 Tabs */}
-                <div className="flex items-center gap-1.5 p-1 bg-slate-200/70 rounded-xl border border-slate-200 self-start md:self-auto">
+                {/* The 3 Tabs (Segmented control style on mobile) */}
+                <div className="w-full sm:w-auto flex items-center justify-between p-1 bg-slate-200/70 rounded-xl border border-slate-200">
                   <button
                     onClick={() => {
                       soundManager.playPop();
                       setActiveDashboardTab('financial');
                     }}
-                    className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
+                    className={`flex-1 sm:flex-none px-3.5 sm:px-4 py-2 rounded-lg text-xs font-bold transition-all text-center ${
                       activeDashboardTab === 'financial'
                         ? 'bg-white text-slate-900 shadow-2xs'
                         : 'text-slate-600 hover:text-slate-900'
@@ -240,7 +241,7 @@ export default function App() {
                       soundManager.playPop();
                       setActiveDashboardTab('operations');
                     }}
-                    className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
+                    className={`flex-1 sm:flex-none px-3.5 sm:px-4 py-2 rounded-lg text-xs font-bold transition-all text-center ${
                       activeDashboardTab === 'operations'
                         ? 'bg-white text-slate-900 shadow-2xs'
                         : 'text-slate-600 hover:text-slate-900'
@@ -253,7 +254,7 @@ export default function App() {
                       soundManager.playPop();
                       setActiveDashboardTab('inventory');
                     }}
-                    className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
+                    className={`flex-1 sm:flex-none px-3.5 sm:px-4 py-2 rounded-lg text-xs font-bold transition-all text-center ${
                       activeDashboardTab === 'inventory'
                         ? 'bg-white text-slate-900 shadow-2xs'
                         : 'text-slate-600 hover:text-slate-900'
@@ -441,6 +442,17 @@ export default function App() {
       />
 
       <AchievementToast />
+
+      {/* Mobile Bottom Navigation Bar */}
+      <MobileBottomNav
+        currentSection={currentSection}
+        onNavigate={(sec) => {
+          setCurrentSection(sec);
+          if (sec === 'operations') setActiveDashboardTab('operations');
+          if (sec === 'dashboard') setActiveDashboardTab('inventory');
+        }}
+        onOpenQuickAction={() => setCommandPaletteOpen(true)}
+      />
     </div>
   );
 }

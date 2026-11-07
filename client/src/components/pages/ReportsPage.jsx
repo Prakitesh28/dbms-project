@@ -76,11 +76,11 @@ export default function ReportsPage() {
         </div>
       </div>
 
-      {/* Report Switcher Tabs */}
-      <div className="flex flex-wrap gap-2 p-1.5 bg-slate-100/80 rounded-xl border border-slate-200/60 w-fit">
+      {/* Report Switcher Tabs (Horizontal scroll on mobile) */}
+      <div className="flex items-center gap-1.5 p-1 bg-slate-100/80 rounded-xl border border-slate-200/60 overflow-x-auto no-scrollbar w-full sm:w-auto">
         <button
           onClick={() => setActiveReport('cost_per_acre')}
-          className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+          className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all shrink-0 whitespace-nowrap ${
             activeReport === 'cost_per_acre'
               ? 'bg-white text-slate-900 shadow-2xs'
               : 'text-slate-600 hover:text-slate-900'
@@ -90,7 +90,7 @@ export default function ReportsPage() {
         </button>
         <button
           onClick={() => setActiveReport('yield_per_acre')}
-          className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+          className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all shrink-0 whitespace-nowrap ${
             activeReport === 'yield_per_acre'
               ? 'bg-white text-slate-900 shadow-2xs'
               : 'text-slate-600 hover:text-slate-900'
@@ -100,7 +100,7 @@ export default function ReportsPage() {
         </button>
         <button
           onClick={() => setActiveReport('profit_by_crop')}
-          className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+          className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all shrink-0 whitespace-nowrap ${
             activeReport === 'profit_by_crop'
               ? 'bg-white text-slate-900 shadow-2xs'
               : 'text-slate-600 hover:text-slate-900'
@@ -110,7 +110,7 @@ export default function ReportsPage() {
         </button>
         <button
           onClick={() => setActiveReport('seasonal')}
-          className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+          className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all shrink-0 whitespace-nowrap ${
             activeReport === 'seasonal'
               ? 'bg-white text-slate-900 shadow-2xs'
               : 'text-slate-600 hover:text-slate-900'
@@ -132,7 +132,7 @@ export default function ReportsPage() {
           <div className="overflow-x-auto">
             {/* 1. Cost per acre */}
             {activeReport === 'cost_per_acre' && (
-              <table className="w-full text-left border-collapse text-xs">
+              <table className="w-full text-left border-collapse text-xs min-w-[720px]">
                 <thead>
                   <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase tracking-wider text-xs">
                     <th className="py-3 px-4">Cycle</th>
@@ -168,7 +168,7 @@ export default function ReportsPage() {
 
             {/* 2. Yield per acre */}
             {activeReport === 'yield_per_acre' && (
-              <table className="w-full text-left border-collapse text-xs">
+              <table className="w-full text-left border-collapse text-xs min-w-[720px]">
                 <thead>
                   <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase tracking-wider text-xs">
                     <th className="py-3 px-4">Cycle</th>
@@ -221,7 +221,7 @@ export default function ReportsPage() {
 
             {/* 3. Profit by crop */}
             {activeReport === 'profit_by_crop' && (
-              <table className="w-full text-left border-collapse text-xs">
+              <table className="w-full text-left border-collapse text-xs min-w-[720px]">
                 <thead>
                   <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase tracking-wider text-xs">
                     <th className="py-3 px-4">Crop Name</th>
@@ -259,7 +259,7 @@ export default function ReportsPage() {
 
             {/* 4. Seasonal Comparisons */}
             {activeReport === 'seasonal' && (
-              <table className="w-full text-left border-collapse text-xs">
+              <table className="w-full text-left border-collapse text-xs min-w-[720px]">
                 <thead>
                   <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase tracking-wider text-xs">
                     <th className="py-3 px-4">Season</th>

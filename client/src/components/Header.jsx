@@ -95,10 +95,11 @@ export default function Header({
             soundManager.playPop();
             onOpenLogUsage();
           }}
-          className="btn-primary text-xs sm:text-sm py-1.5 sm:py-2 px-3 sm:px-4 active:scale-98 transition-transform"
+          className="btn-primary text-xs sm:text-sm py-1.5 sm:py-2 px-2.5 sm:px-4 active:scale-98 transition-transform shrink-0"
+          title="Log Input Usage"
         >
           <Plus className="w-4 h-4" />
-          <span>Log Input</span>
+          <span className="hidden sm:inline">Log Input</span>
         </button>
 
         {/* Live DB Indicator */}

@@ -45,101 +45,101 @@ export default function InventoryTab({
 
   return (
     <div className="space-y-6">
-      {/* 6 Stat Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
+      {/* 6 Stat Cards (2-col on mobile, 3-col on tablet, 6-col on desktop) */}
+      <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3 sm:gap-4">
         {/* 1. Total Items */}
-        <div className="bg-white rounded-xl p-5 border border-slate-200/80 shadow-2xs">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-medium text-slate-500">Total Items</span>
-            <div className="p-2 bg-slate-50 text-slate-600 rounded-lg">
-              <Package className="w-4 h-4" />
+        <div className="bg-white rounded-xl p-3.5 sm:p-5 border border-slate-200/80 shadow-2xs">
+          <div className="flex items-center justify-between mb-2 sm:mb-3">
+            <span className="text-[11px] sm:text-xs font-medium text-slate-500">Total Items</span>
+            <div className="p-1.5 sm:p-2 bg-slate-50 text-slate-600 rounded-lg">
+              <Package className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </div>
           </div>
-          <div className="text-2xl font-bold text-slate-900 tracking-tight mb-1">
+          <div className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight mb-0.5 sm:mb-1">
             {stats?.total_items?.value ?? 0}
           </div>
-          <div className="text-xs text-slate-500 truncate">
+          <div className="text-[10px] sm:text-xs text-slate-500 truncate">
             {stats?.total_items?.status_caption || 'Registered stock SKUs'}
           </div>
         </div>
 
         {/* 2. Total Value */}
-        <div className="bg-white rounded-xl p-5 border border-slate-200/80 shadow-2xs">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-medium text-slate-500">Total Value</span>
-            <div className="p-2 bg-emerald-50 text-emerald-600 rounded-lg">
-              <DollarSign className="w-4 h-4" />
+        <div className="bg-white rounded-xl p-3.5 sm:p-5 border border-slate-200/80 shadow-2xs">
+          <div className="flex items-center justify-between mb-2 sm:mb-3">
+            <span className="text-[11px] sm:text-xs font-medium text-slate-500">Total Value</span>
+            <div className="p-1.5 sm:p-2 bg-emerald-50 text-emerald-600 rounded-lg">
+              <DollarSign className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </div>
           </div>
-          <div className="text-2xl font-bold text-slate-900 tracking-tight mb-1">
+          <div className="text-lg sm:text-2xl font-bold text-slate-900 tracking-tight mb-0.5 sm:mb-1 truncate">
             ₹{(stats?.total_value?.value ?? 0).toLocaleString()}
           </div>
-          <div className="text-xs text-slate-500 truncate">
+          <div className="text-[10px] sm:text-xs text-slate-500 truncate">
             {stats?.total_value?.status_caption || 'Live asset valuation'}
           </div>
         </div>
 
         {/* 3. Low Stock */}
-        <div className="bg-white rounded-xl p-5 border border-slate-200/80 shadow-2xs">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-medium text-slate-500">Low Stock</span>
-            <div className={`p-2 rounded-lg ${stats?.low_stock?.value > 0 ? 'bg-amber-50 text-amber-600' : 'bg-slate-50 text-slate-400'}`}>
-              <AlertCircle className="w-4 h-4" />
+        <div className="bg-white rounded-xl p-3.5 sm:p-5 border border-slate-200/80 shadow-2xs">
+          <div className="flex items-center justify-between mb-2 sm:mb-3">
+            <span className="text-[11px] sm:text-xs font-medium text-slate-500">Low Stock</span>
+            <div className={`p-1.5 sm:p-2 rounded-lg ${stats?.low_stock?.value > 0 ? 'bg-amber-50 text-amber-600' : 'bg-slate-50 text-slate-400'}`}>
+              <AlertCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </div>
           </div>
-          <div className={`text-2xl font-bold tracking-tight mb-1 ${stats?.low_stock?.value > 0 ? 'text-amber-600' : 'text-slate-900'}`}>
+          <div className={`text-xl sm:text-2xl font-bold tracking-tight mb-0.5 sm:mb-1 ${stats?.low_stock?.value > 0 ? 'text-amber-600' : 'text-slate-900'}`}>
             {stats?.low_stock?.value ?? 0}
           </div>
-          <div className="text-xs text-slate-500 truncate">
+          <div className="text-[10px] sm:text-xs text-slate-500 truncate">
             {stats?.low_stock?.status_caption || 'At or below threshold'}
           </div>
         </div>
 
         {/* 4. Out of Stock */}
-        <div className="bg-white rounded-xl p-5 border border-slate-200/80 shadow-2xs">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-medium text-slate-500">Out of Stock</span>
-            <div className={`p-2 rounded-lg ${stats?.out_of_stock?.value > 0 ? 'bg-rose-50 text-rose-600' : 'bg-slate-50 text-slate-400'}`}>
-              <XCircle className="w-4 h-4" />
+        <div className="bg-white rounded-xl p-3.5 sm:p-5 border border-slate-200/80 shadow-2xs">
+          <div className="flex items-center justify-between mb-2 sm:mb-3">
+            <span className="text-[11px] sm:text-xs font-medium text-slate-500">Out of Stock</span>
+            <div className={`p-1.5 sm:p-2 rounded-lg ${stats?.out_of_stock?.value > 0 ? 'bg-rose-50 text-rose-600' : 'bg-slate-50 text-slate-400'}`}>
+              <XCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </div>
           </div>
-          <div className={`text-2xl font-bold tracking-tight mb-1 ${stats?.out_of_stock?.value > 0 ? 'text-rose-600' : 'text-slate-900'}`}>
+          <div className={`text-xl sm:text-2xl font-bold tracking-tight mb-0.5 sm:mb-1 ${stats?.out_of_stock?.value > 0 ? 'text-rose-600' : 'text-slate-900'}`}>
             {stats?.out_of_stock?.value ?? 0}
           </div>
-          <div className="text-xs text-slate-500 truncate">
+          <div className="text-[10px] sm:text-xs text-slate-500 truncate">
             {stats?.out_of_stock?.status_caption || 'Zero units available'}
           </div>
         </div>
 
         {/* 5. Recent Activity (7d) */}
-        <div className="bg-white rounded-xl p-5 border border-slate-200/80 shadow-2xs">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-medium text-slate-500">Recent Activity</span>
-            <div className="p-2 bg-slate-50 text-slate-600 rounded-lg">
-              <Clock className="w-4 h-4" />
+        <div className="bg-white rounded-xl p-3.5 sm:p-5 border border-slate-200/80 shadow-2xs">
+          <div className="flex items-center justify-between mb-2 sm:mb-3">
+            <span className="text-[11px] sm:text-xs font-medium text-slate-500">Recent Activity</span>
+            <div className="p-1.5 sm:p-2 bg-slate-50 text-slate-600 rounded-lg">
+              <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </div>
           </div>
-          <div className="text-2xl font-bold text-slate-900 tracking-tight mb-1">
+          <div className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight mb-0.5 sm:mb-1">
             {stats?.recent_activity?.value ?? 0}
           </div>
-          <div className="text-xs text-slate-500 truncate">
+          <div className="text-[10px] sm:text-xs text-slate-500 truncate">
             {stats?.recent_activity?.status_caption || 'Last 7 days movements'}
           </div>
         </div>
 
         {/* 6. Monthly Activity */}
-        <div className="bg-white rounded-xl p-5 border border-slate-200/80 shadow-2xs">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-medium text-slate-500">Monthly Activity</span>
-            <div className="p-2 bg-slate-50 text-slate-600 rounded-lg">
-              <TrendingUp className="w-4 h-4" />
+        <div className="bg-white rounded-xl p-3.5 sm:p-5 border border-slate-200/80 shadow-2xs">
+          <div className="flex items-center justify-between mb-2 sm:mb-3">
+            <span className="text-[11px] sm:text-xs font-medium text-slate-500">Monthly Volume</span>
+            <div className="p-1.5 sm:p-2 bg-slate-50 text-slate-600 rounded-lg">
+              <TrendingUp className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </div>
           </div>
-          <div className="text-2xl font-bold text-slate-900 tracking-tight mb-1">
+          <div className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight mb-0.5 sm:mb-1">
             {stats?.monthly_activity?.value ?? 0}
           </div>
-          <div className="text-xs text-slate-500 truncate">
-            {stats?.monthly_activity?.status_caption || 'Current month ledger entries'}
+          <div className="text-[10px] sm:text-xs text-slate-500 truncate">
+            {stats?.monthly_activity?.status_caption || 'Activity change'}
           </div>
         </div>
       </div>

@@ -41,10 +41,10 @@ export default function OperationsTab({
     <div className="space-y-6">
       {/* Sub-view switcher */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-slate-200">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar w-full sm:w-auto pb-1 sm:pb-0">
           <button
             onClick={() => setActiveSubView('plots')}
-            className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
+            className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-colors shrink-0 whitespace-nowrap ${
               activeSubView === 'plots'
                 ? 'bg-slate-900 text-white'
                 : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
@@ -54,7 +54,7 @@ export default function OperationsTab({
           </button>
           <button
             onClick={() => setActiveSubView('schedules')}
-            className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
+            className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-colors shrink-0 whitespace-nowrap ${
               activeSubView === 'schedules'
                 ? 'bg-slate-900 text-white'
                 : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
@@ -64,7 +64,7 @@ export default function OperationsTab({
           </button>
           <button
             onClick={() => setActiveSubView('calendar')}
-            className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
+            className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-colors shrink-0 whitespace-nowrap ${
               activeSubView === 'calendar'
                 ? 'bg-slate-900 text-white'
                 : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'

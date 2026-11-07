@@ -134,7 +134,7 @@ export default function FarmAmbientBanner({
         </div>
 
         {/* Right: Sound Toggle & Viva Mastery Progress */}
-        <div className="flex items-center gap-2.5 self-start md:self-auto shrink-0">
+        <div className="flex items-center justify-between sm:justify-end gap-2.5 w-full md:w-auto shrink-0 pt-2 md:pt-0 border-t border-emerald-700/40 md:border-t-0">
           {/* Sound FX Toggle */}
           <button
             onClick={toggleSound}
@@ -170,3 +170,4 @@ export default function FarmAmbientBanner({
     </div>
   );
 }
+
