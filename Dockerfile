@@ -28,3 +28,4 @@ EXPOSE 5000
 
 # Start server (automatically initializes/seeds SQLite database if not present)
 CMD ["node", "server/index.js"]
+

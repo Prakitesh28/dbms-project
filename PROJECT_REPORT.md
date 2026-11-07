@@ -673,3 +673,4 @@ Potential areas for future enhancement and system expansion include:
    Train multivariate regression models on historical plot yield data, soil type, and weather indices to provide predictive yield projections before planting.
 5. **Multi-Tenant Cooperative Support:**
    Extend the data model with Role-Based Access Control (RBAC) to support agricultural cooperatives, allowing pooled fertilizer procurement and aggregated commodity price benchmarking.
+

@@ -75,20 +75,29 @@ router.post('/items', async (req, res) => {
       return res.status(400).json({ error: 'Missing required item fields' });
     }
     const db = await getDb();
-    const result = db.prepare(`
-      INSERT INTO inventory_items (farm_id, name, category, unit, unit_cost, reorder_level, current_stock, supplier_id)
-      VALUES (?, ?, ?, ?, ?, ?, 0.0, ?)
-    `).run(farm_id, name, category, unit, Number(unit_cost), Number(reorder_level || 10.0), supplier_id || null);
+    
+    db.exec('BEGIN TRANSACTION');
+    let itemId;
+    try {
+      const result = db.prepare(`
+        INSERT INTO inventory_items (farm_id, name, category, unit, unit_cost, reorder_level, current_stock, supplier_id)
+        VALUES (?, ?, ?, ?, ?, ?, 0.0, ?)
+      `).run(farm_id, name, category, unit, Number(unit_cost), Number(reorder_level || 10.0), supplier_id || null);
 
-    const itemId = result.lastInsertRowid;
+      itemId = result.lastInsertRowid;
 
-    // If initial stock was provided, create an initial purchase transaction
-    if (initial_stock && Number(initial_stock) > 0) {
-      const today = new Date().toISOString().split('T')[0];
-      db.prepare(`
-        INSERT INTO inventory_transactions (inventory_item_id, supplier_id, transaction_type, quantity, unit_cost, transaction_date, notes)
-        VALUES (?, ?, 'purchase', ?, ?, ?, 'Initial inventory stock opening')
-      `).run(itemId, supplier_id || null, Number(initial_stock), Number(unit_cost), today);
+      // If initial stock was provided, create an initial purchase transaction inside the same atomic transaction
+      if (initial_stock && Number(initial_stock) > 0) {
+        const today = new Date().toISOString().split('T')[0];
+        db.prepare(`
+          INSERT INTO inventory_transactions (inventory_item_id, supplier_id, transaction_type, quantity, unit_cost, transaction_date, notes)
+          VALUES (?, ?, 'purchase', ?, ?, ?, 'Initial inventory stock opening')
+        `).run(itemId, supplier_id || null, Number(initial_stock), Number(unit_cost), today);
+      }
+      db.exec('COMMIT');
+    } catch (txErr) {
+      try { db.exec('ROLLBACK'); } catch (_) {}
+      throw txErr;
     }
 
     const created = db.prepare('SELECT * FROM v_current_stock_levels WHERE item_id = ?').get(itemId);

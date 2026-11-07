@@ -105,5 +105,11 @@ export const api = {
 
   // Weather API
   getWeather: (farmId) => fetchJson(`/weather${farmId ? `?farm_id=${farmId}` : ''}`),
+
+  // Step 4: DBMS Lab & Schema Introspection
+  getSchema: () => fetchJson('/schema'),
+  getLabQueries: () => fetchJson('/lab/queries'),
+  runPlaygroundQuery: (sql) => fetchJson('/lab/playground/execute', { method: 'POST', body: JSON.stringify({ sql }) }),
+  testLiveTrigger: (scenario) => fetchJson('/lab/triggers/test', { method: 'POST', body: JSON.stringify({ scenario }) }),
 };
 

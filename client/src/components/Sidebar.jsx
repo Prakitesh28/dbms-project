@@ -239,6 +239,26 @@ export default function Sidebar({
             <TrendingUp className="w-4 h-4 shrink-0" />
             <span>Yield Trends & Deficits</span>
           </button>
+
+          {/* DBMS Lab Section */}
+          <button
+            onClick={() => handleNav('dbms-lab')}
+            className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+              currentSection === 'dbms-lab'
+                ? 'bg-emerald-600 text-white font-semibold shadow-2xs'
+                : 'text-emerald-800 bg-emerald-50/70 hover:bg-emerald-100 border border-emerald-200'
+            }`}
+          >
+            <div className="flex items-center gap-3">
+              <Database className={`w-4 h-4 shrink-0 ${currentSection === 'dbms-lab' ? 'text-white' : 'text-emerald-600'}`} />
+              <span>DBMS Lab</span>
+            </div>
+            <span className={`px-1.5 py-0.5 rounded text-xs font-bold ${
+              currentSection === 'dbms-lab' ? 'bg-emerald-700 text-white' : 'bg-emerald-200 text-emerald-900'
+            }`}>
+              Viva
+            </span>
+          </button>
         </nav>
 
         {/* Weather Forecast & System Integrity Status in Footer */}

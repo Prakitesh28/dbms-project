@@ -21,6 +21,8 @@ import dashboardRoutes from './routes/dashboard.js';
 import reportsRoutes from './routes/reports.js';
 import yieldTrendsRoutes from './routes/yieldTrends.js';
 import weatherRoutes from './routes/weather.js';
+import schemaRoutes from './routes/schema.js';
+import labRoutes from './routes/lab.js';
 
 dotenv.config();
 
@@ -55,6 +57,8 @@ app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/reports', reportsRoutes);
 app.use('/api/yield-trends', yieldTrendsRoutes);
 app.use('/api/weather', weatherRoutes);
+app.use('/api/schema', schemaRoutes);
+app.use('/api/lab', labRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

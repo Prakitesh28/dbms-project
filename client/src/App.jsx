@@ -15,6 +15,7 @@ import CropCyclesPage from './components/pages/CropCyclesPage';
 import PlotsPage from './components/pages/PlotsPage';
 import ReportsPage from './components/pages/ReportsPage';
 import YieldTrendsPage from './components/pages/YieldTrendsPage';
+import DbmsLabPage from './components/pages/DbmsLabPage';
 
 // Modals
 import LogUsageModal from './components/modals/LogUsageModal';
@@ -311,6 +312,9 @@ export default function App() {
 
           {/* Sub-Page: Yield Trends Dashboard */}
           {currentSection === 'yield-trends' && <YieldTrendsPage />}
+
+          {/* Sub-Page: DBMS Laboratory */}
+          {currentSection === 'dbms-lab' && <DbmsLabPage />}
         </main>
       </div>
 
