@@ -1,0 +1,24 @@
+{
+  "name": "farmledger",
+  "version": "1.0.0",
+  "description": "Farmer Crop Planning and Agricultural Inventory System for university DBMS",
+  "scripts": {
+    "server": "node server/index.js",
+    "seed": "node server/db/seed.js",
+    "client": "npm --prefix client run dev",
+    "build": "npm --prefix client run build",
+    "start": "node server/index.js"
+  },
+  "keywords": [
+    "dbms",
+    "agriculture",
+    "crop-cycles",
+    "inventory",
+    "triggers",
+    "views",
+    "sql"
+  ],
+  "author": "Antigravity",
+  "license": "MIT"
+}
+
